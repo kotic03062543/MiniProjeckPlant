@@ -56,7 +56,7 @@ class _PlantPageBodyState extends State<PlantPageBody> {
 
   Future getdata() async {
     // var url = "http://localhost/addressbook/select.php";
-    var url = Uri.parse("http://10.0.2.2//connectPHP/select_product.php");
+    var url = Uri.parse("https://plantyshop.vitinias.com/connectPHP/select_product.php");
     var response = await http.get(url);
     return json.decode(response.body);
   }
