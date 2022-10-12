@@ -35,7 +35,7 @@ class _MainPlantPageState extends State<MainPlantPage> {
 
   List<ModelUserMember> memberlist = [];
   Future getmember() async {
-    var url = Uri.parse('http://10.0.2.2/connectPHP/select.php');
+    var url = Uri.parse('https://plantyshop.vitinias.com/connectPHP/login.php');
     var response1 = await http.post(url, body: {
       'user_id': widget.id,
     });
