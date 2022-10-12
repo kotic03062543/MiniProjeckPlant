@@ -96,7 +96,7 @@ class _PlantPageBodyState extends State<PlantPageBody> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              BigText(text: 'Recommen'),
+              BigText(text: 'Recomment'),
               SizedBox(width: Dimensions.width10),
               Container(
                 margin: EdgeInsets.only(bottom: 3),
