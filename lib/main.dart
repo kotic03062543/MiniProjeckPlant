@@ -7,6 +7,8 @@ import 'package:myfirstapp/pages/home/bottom_bar/profile.dart';
 import 'package:myfirstapp/pages/home/main_plant_page.dart';
 import 'package:myfirstapp/pages/plant_shop/poppular_detail.dart';
 import 'package:myfirstapp/pages/plant_shop/recommended_plant.dart';
+import 'package:myfirstapp/profile/track_order.dart';
+import 'package:myfirstapp/splash_screen.dart';
 import 'login_register_home/getstarted.dart';
 
 void main() {
@@ -25,10 +27,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      
+
       // home: HomeScreen(),
       // home: HomeScreen(),
-      home: MainPlantPage(id: 'user_id',),
+      home: SplashScreen(),
       // home: PopularPlantDetail(),
       // home: ProFile(),
     );
