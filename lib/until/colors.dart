@@ -4,6 +4,7 @@ import 'dart:ui';
 
 class AppColors {
   static final maincolor = Color(0xFF388E3C);
+  static final maincolorgreenme = Color(0xFF8BC34A);
   static final textcolorWhite = Color(0xFFccc7c5);
   static final whiteColor = Color(0xFFFFFFFF);
   static final mainblackcolor = Color(0xFF332d2b);

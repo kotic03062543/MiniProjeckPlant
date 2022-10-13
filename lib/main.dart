@@ -10,6 +10,7 @@ import 'package:myfirstapp/pages/plant_shop/recommended_plant.dart';
 import 'package:myfirstapp/profile/track_order.dart';
 import 'package:myfirstapp/splash_screen.dart';
 import 'login_register_home/getstarted.dart';
+import 'login_register_home/login_regis.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Test',
+      title: 'Mainpage',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       // home: HomeScreen(),
       home: SplashScreen(),
       // home: PopularPlantDetail(),
-      // home: ProFile(),
+        home: LoginRegis(),
     );
   }
 }
