@@ -30,7 +30,7 @@ class _MainPlantPageState extends State<MainPlantPage> {
     super.initState();
     getmember();
 
-    print('Test : ${widget.id}');
+    // print('Test : ${widget.id}');
   }
 
   List<ModelUserMember> memberlist = [];

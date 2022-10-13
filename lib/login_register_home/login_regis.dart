@@ -1,16 +1,23 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:miniproject/home.dart';
 // import 'package:miniproject/main.dart';
 import 'package:myfirstapp/login_register_home/getstarted.dart';
+import 'package:myfirstapp/until/colors.dart';
+import 'package:myfirstapp/until/dimension.dart';
+import 'package:myfirstapp/widgets/big_text.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 // import 'package:form_field_validator/form_field_validator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../pages/home/bottom_bar/home.dart';
 import '../pages/home/main_plant_page.dart';
 
 class LoginRegis extends StatefulWidget {
@@ -21,7 +28,7 @@ class LoginRegis extends StatefulWidget {
 }
 
 class _loginState extends State<LoginRegis> {
-FToast fToast = FToast();
+  FToast fToast = FToast();
   @override
   void initState() {
     // TODO: implement initState
@@ -29,6 +36,7 @@ FToast fToast = FToast();
     fToast = FToast();
     fToast.init(context);
   }
+
   final formusersname = TextEditingController();
   final formpassword = TextEditingController();
 
@@ -41,64 +49,79 @@ FToast fToast = FToast();
     var data = jsonDecode(response.body);
     if (data == "Fail") {
       _showToast();
-      print("Login Fail");
+      print("Login Error");
       return;
     } else {
-      String user_id = data[0]['user_id'].toString();
-      goHome(user_id);
+      String userId = data[0]['user_id'].toString();
+      _showToastSuccess();
+      Homepage(userId);
     }
   }
 
-  void goHome(String user_id) {
+  void Homepage(String userId) {
     Navigator.pushReplacement(
       context,
       PageTransition(
         type: PageTransitionType.rightToLeft,
-        child: MainPlantPage(
-          id: user_id,
+        child: Launcher(
+          id: userId,
         ),
       ),
     );
   }
 
   _showToast() {
-   Widget toast = Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-        decoration: BoxDecoration(
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
         color: Color.fromARGB(255, 230, 81, 55),
-        ),
-        child: Row(
+      ),
+      child: Row(
         mainAxisSize: MainAxisSize.min,
+        // ignore: prefer_const_literals_to_create_immutables
         children: [
-            Icon(Icons.error_outline),
-            SizedBox(
+          Icon(Icons.error_outline),
+          SizedBox(
             width: 12.0,
-            ),
-            Text("กรุณากรอกข้อมูลให้ถูกต้อง"),
+          ),
+          Text("Username and password invalid"),
         ],
-        ),
+      ),
     );
-
 
     fToast.showToast(
-        
-        child: toast,
-        gravity: ToastGravity.BOTTOM,
-        toastDuration: Duration(seconds: 2),
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 3),
     );
-    
-    // Custom Toast Position
-    // fToast.showToast(
-    //     child: toast,
-    //     toastDuration: Duration(seconds: 2),
-    //     positionedToastBuilder: (context, child) {
-    //       return Positioned(
-    //         child: child,
-    //         top: 16.0,
-    //         left: 16.0,
-    //       );
-    //     });
+  }
+
+  _showToastSuccess() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: AppColors.yellowcolor,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        // ignore: prefer_const_literals_to_create_immutables
+        children: [
+          Icon(Icons.error_outline),
+          SizedBox(
+            width: 12.0,
+          ),
+          Text("Login Success"),
+        ],
+      ),
+    );
+
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 3),
+    );
   }
 
   TextStyle heading1 = GoogleFonts.kanit(
@@ -115,159 +138,161 @@ FToast fToast = FToast();
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color.fromARGB(255, 8, 104, 159),
+      backgroundColor: AppColors.maincolor,
       body: SafeArea(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 300,
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Welcome back',
-                  style: heading1,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Column(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 340,
+              padding: EdgeInsets.all(10),
+              child: Column(
                 children: [
-                  Center(
-                    child: SizedBox(
-                      width: 350,
-                      child: TextField(
-                        controller: formusersname,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          labelText: 'User name',
-                          labelStyle: Input,
-                          contentPadding: EdgeInsets.all(20),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(
-                                width: 2,
-                                color: Color.fromARGB(255, 255, 255, 255)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 2,
-                                color: Color.fromARGB(255, 255, 255, 255)),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                      ),
-                    ),
+                  Image.asset('./images/logo1.png'),
+                  Text(
+                    'WELCOME TO',
+                    style: heading1,
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: SizedBox(
-                      width: 350,
-                      child: TextField(
-                        controller: formpassword,
-                        obscureText: true,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          labelText: 'password',
-                          labelStyle: Input,
-                          contentPadding: EdgeInsets.all(20),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(
-                                color: Colors.white,
-                                width: 2,
-                              )),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 2,
-                                color: Color.fromARGB(255, 255, 255, 255)),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Forget password?',
-                      style: Chike,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Center(
-                    child: SizedBox(
-                      width: 350,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () =>
-                            {checkLogin(formusersname.text, formpassword.text)},
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 255, 255, 255),
-                          onPrimary: Color.fromARGB(255, 0, 0, 0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Don’t have account yet?',
-                          style: GoogleFonts.kanit(
-                              color: Colors.white, fontSize: 15),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: register()));
-                            },
-                            child: Text(
-                              'Sign up',
-                              style: Chike,
-                            )),
-                        Text(
-                          'now!',
-                          style: GoogleFonts.kanit(
-                              color: Colors.white, fontSize: 15),
-                        )
-                      ],
-                    ),
-                  )
+                  SizedBox(height: Dimensions.height10),
+                  BigText(text: 'LOGIN', color: AppColors.whiteColor),
                 ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: Dimensions.height20,
+            ),
+            Column(
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: 350,
+                    child: TextField(
+                      controller: formusersname,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'User name',
+                        labelStyle: Input,
+                        contentPadding: EdgeInsets.all(20),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SizedBox(
+                    width: 350,
+                    child: TextField(
+                      controller: formpassword,
+                      obscureText: true,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'password',
+                        labelStyle: Input,
+                        contentPadding: EdgeInsets.all(20),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 2,
+                            )),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Forget password?',
+                    style: Chike,
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: SizedBox(
+                    width: 350,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () =>
+                          {checkLogin(formusersname.text, formpassword.text)},
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 255, 255, 255),
+                        onPrimary: Color.fromARGB(255, 0, 0, 0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Don’t have account yet?',
+                        style: GoogleFonts.kanit(
+                            color: Colors.white, fontSize: 15),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return register();
+                              },
+                            ));
+                          },
+                          child: Text(
+                            'Sign up',
+                            style: Chike,
+                          )),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 class register extends StatefulWidget {
   const register({Key? key}) : super(key: key);
@@ -278,38 +303,70 @@ class register extends StatefulWidget {
 
 class _registerState extends State<register> {
   final formkey = GlobalKey<FormState>();
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-  final emailController = TextEditingController();
-  final FullnameController = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController fullname = TextEditingController();
+  TextEditingController user_email = TextEditingController();
 
-  void checkregister(
-      String username, String password, String email, String fullname) async {
-    var url = Uri.parse('http://10.0.2.2/photo/reginter.php');
-    var response = await http.post(url, body: {
-      'username': username,
-      'password': password,
-      'email': email,
-      'fullname': fullname,
-    });
-    var data = jsonDecode(response.body);
-    if (data == "Error") {
-      print("register Fail");
-      return;
-    } else {
-      gologin();
+  Future addUser() async {
+    // var url = "https://pattyteacher.000webhostapp.com/insert_user.php";
+    var url =
+        Uri.parse("https://plantyshop.vitinias.com/connectPHP/register.php");
+    var data = {};
+    data['username'] = username.text;
+    data['password'] = password.text;
+    data['fullname'] = fullname.text;
+    data['user_email'] = user_email.text;
+
+    print(username.text);
+    print(password.text);
+    print(fullname.text);
+    print(user_email.text);
+
+    var response = await http.post(
+      url,
+      body: data,
+    );
+
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      print(data);
+      if (data == "Error") {
+        Fluttertoast.showToast(
+            msg: "Username Or Email already exist",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Colors.red,
+            textColor: Color.fromARGB(255, 255, 255, 255),
+            fontSize: 16.0);
+      } else if (data == "Success") {
+        Fluttertoast.showToast(
+            msg: "Register Success",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Colors.green,
+            textColor: Color.fromARGB(255, 255, 255, 255),
+            fontSize: 16.0);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginRegis(),
+          ),
+        );
+      } else {
+        Fluttertoast.showToast(
+            msg: "Insert Error",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Theme.of(context).primaryColor,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
     }
-  }
-
-  void gologin() {
-    
-    // Navigator.pushReplacement(
-    //   context,
-    //   PageTransition(
-    //     type: PageTransitionType.rightToLeft,
-    //     child: login(),
-    //   ),
-    // );
   }
 
   TextStyle heading1 = GoogleFonts.kanit(
@@ -321,12 +378,12 @@ class _registerState extends State<register> {
       fontWeight: FontWeight.bold,
       color: Colors.white);
   TextStyle Input = GoogleFonts.kanit(color: Colors.white);
-  TextStyle password = GoogleFonts.kanit(color: Colors.white);
+  // TextStyle password = GoogleFonts.kanit(color: Colors.white);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color.fromARGB(255, 8, 104, 159),
+      backgroundColor: AppColors.maincolor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -337,9 +394,11 @@ class _registerState extends State<register> {
                 Container(
                   width: 300,
                   padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Create Account',
-                    style: heading1,
+                  child: Center(
+                    child: Text(
+                      'Create Account',
+                      style: heading1,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -353,14 +412,14 @@ class _registerState extends State<register> {
                         child: SizedBox(
                           width: 350,
                           child: TextFormField(
-                            controller: emailController,
+                            controller: username,
                             // validator: MultiValidator([
                             //   RequiredValidator(errorText: 'กรุณากรอกอีเมล'),
                             //   EmailValidator(errorText: 'รูปแบบอีเมลไม่ถูกต้อง'),
                             // ]),
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              labelText: 'Email',
+                              labelText: 'username',
                               labelStyle: Input,
                               contentPadding: EdgeInsets.all(20),
                               enabledBorder: OutlineInputBorder(
@@ -386,73 +445,78 @@ class _registerState extends State<register> {
                         child: SizedBox(
                           width: 350,
                           child: TextFormField(
-                            controller: FullnameController,
-                            // validator: MultiValidator([
-                            //   RequiredValidator(errorText: 'กรุณากรอกอีเมล'),
-                            //   EmailValidator(errorText: 'รูปแบบอีเมลไม่ถูกต้อง'),
-                            // ]),
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: 'Full Name',
-                              labelStyle: Input,
-                              contentPadding: EdgeInsets.all(20),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 255, 255, 255)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 255, 255, 255)),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Center(
-                        child: SizedBox(
-                          width: 350,
-                          child: TextFormField(
-                            controller: usernameController,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: 'User Name',
-                              labelStyle: Input,
-                              contentPadding: EdgeInsets.all(20),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 255, 255, 255)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 255, 255, 255)),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Center(
-                        child: SizedBox(
-                          width: 350,
-                          child: TextFormField(
-                            controller: passwordController,
+                            controller: password,
                             obscureText: true,
+                            // validator: MultiValidator([
+                            //   RequiredValidator(errorText: 'enter a valid email address'),
+                            //   EmailValidator(errorText: 'this field is required'),
+                            // ]),
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               labelText: 'password',
+                              labelStyle: Input,
+                              contentPadding: EdgeInsets.all(20),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: 350,
+                          child: TextFormField(
+                            controller: fullname,
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              labelText: 'fullname',
+                              labelStyle: Input,
+                              contentPadding: EdgeInsets.all(20),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: 350,
+                          child: TextFormField(
+                            controller: user_email,
+                            // obscureText: true,
+                            // validator: MultiValidator([
+                            //   RequiredValidator(errorText: 'enter a valid email address'),
+                            //   EmailValidator(errorText: 'this field is required'),
+                            // ]),
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              labelText: 'email',
                               labelStyle: Input,
                               contentPadding: EdgeInsets.all(20),
                               enabledBorder: OutlineInputBorder(
@@ -472,44 +536,29 @@ class _registerState extends State<register> {
                         ),
                       ),
                       SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
-                      Center(
-                        child: SizedBox(
-                          width: 350,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () => {
-                              if (formkey.currentState!.validate())
-                                {
-                                  checkregister(
-                                      usernameController.text,
-                                      passwordController.text,
-                                      emailController.text,
-                                      FullnameController.text)
-                                }
-                            },
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     PageTransition(
-                            //         type: PageTransitionType.rightToLeft,
-                            //         child: login()));
-
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 255, 255, 255),
-                              onPrimary: Color.fromARGB(255, 0, 0, 0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.whiteColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 120, vertical: 15),
+                          child: Text(
+                            "Register",
+                            style: TextStyle(
+                              color: AppColors.maincolor,
+                              fontSize: 20,
                             ),
                           ),
                         ),
+                        onPressed: () {
+                          addUser();
+                        },
                       ),
                       SizedBox(
                         height: 25,
@@ -525,7 +574,11 @@ class _registerState extends State<register> {
                             ),
                             TextButton(
                                 onPressed: () {
-                                  
+                                  Navigator.pop(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return LoginRegis();
+                                    },
+                                  ));
                                 },
                                 child: Text(
                                   'Back to login.',

@@ -10,7 +10,7 @@ import 'shopping_cart.dart';
 class Launcher extends StatefulWidget {
   static const routeName = '/';
 
-  const Launcher({Key? key}) : super(key: key);
+  const Launcher({Key? key, required String id}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
