@@ -419,7 +419,7 @@ class _registerState extends State<register> {
                             // ]),
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              labelText: 'username',
+                              labelText: 'Username',
                               labelStyle: Input,
                               contentPadding: EdgeInsets.all(20),
                               enabledBorder: OutlineInputBorder(
@@ -453,7 +453,7 @@ class _registerState extends State<register> {
                             // ]),
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              labelText: 'password',
+                              labelText: 'Password',
                               labelStyle: Input,
                               contentPadding: EdgeInsets.all(20),
                               enabledBorder: OutlineInputBorder(
@@ -482,7 +482,7 @@ class _registerState extends State<register> {
                             controller: fullname,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              labelText: 'fullname',
+                              labelText: 'Fullname',
                               labelStyle: Input,
                               contentPadding: EdgeInsets.all(20),
                               enabledBorder: OutlineInputBorder(
@@ -516,7 +516,7 @@ class _registerState extends State<register> {
                             // ]),
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              labelText: 'email',
+                              labelText: 'Email',
                               labelStyle: Input,
                               contentPadding: EdgeInsets.all(20),
                               enabledBorder: OutlineInputBorder(
@@ -568,7 +568,7 @@ class _registerState extends State<register> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Already have an account?',
+                              'Already have an account ?',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             ),
@@ -586,7 +586,7 @@ class _registerState extends State<register> {
                                 )),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
