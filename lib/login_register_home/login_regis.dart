@@ -42,29 +42,32 @@ class _loginState extends State<LoginRegis> {
 
   void checkLogin(String username, String password) async {
     var url = Uri.parse('https://plantyshop.vitinias.com/connectPHP/login.php');
-    var response = await http.post(url, body: {
-      'username': username,
-      'password': password,
-    });
+    var response = await http.post(
+      url,
+      body: {
+        'username': username,
+        'password': password,
+      },
+    );
     var data = jsonDecode(response.body);
     if (data == "Fail") {
       _showToast();
       print("Login Error");
       return;
     } else {
-      String userId = data[0]['user_id'].toString();
+      String user_id = data[0]['user_id'].toString();
       _showToastSuccess();
-      Homepage(userId);
+      Homepage(user_id);
     }
   }
 
-  void Homepage(String userId) {
+  void Homepage(String user_id) {
     Navigator.pushReplacement(
       context,
       PageTransition(
         type: PageTransitionType.rightToLeft,
         child: Launcher(
-          id: userId,
+          id: user_id,
         ),
       ),
     );
@@ -102,17 +105,17 @@ class _loginState extends State<LoginRegis> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: AppColors.yellowcolor,
+        color: AppColors.maincolor,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         // ignore: prefer_const_literals_to_create_immutables
         children: [
-          Icon(Icons.error_outline),
+          Icon(Icons.error_outline, color: Colors.white),
           SizedBox(
             width: 12.0,
           ),
-          Text("Login Success"),
+          Text("Login Success",style: TextStyle(color: AppColors.whiteColor)),
         ],
       ),
     );
@@ -293,6 +296,7 @@ class _loginState extends State<LoginRegis> {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
+///register
 
 class register extends StatefulWidget {
   const register({Key? key}) : super(key: key);
@@ -303,6 +307,7 @@ class register extends StatefulWidget {
 
 class _registerState extends State<register> {
   final formkey = GlobalKey<FormState>();
+
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController fullname = TextEditingController();
@@ -318,10 +323,10 @@ class _registerState extends State<register> {
     data['fullname'] = fullname.text;
     data['user_email'] = user_email.text;
 
-    print(username.text);
-    print(password.text);
-    print(fullname.text);
-    print(user_email.text);
+    // print(username.text);
+    // print(password.text);
+    // print(fullname.text);
+    // print(user_email.text);
 
     var response = await http.post(
       url,
@@ -347,7 +352,7 @@ class _registerState extends State<register> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 5,
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.maincolor,
             textColor: Color.fromARGB(255, 255, 255, 255),
             fontSize: 16.0);
         Navigator.push(
@@ -362,7 +367,7 @@ class _registerState extends State<register> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 5,
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
       }
@@ -411,6 +416,7 @@ class _registerState extends State<register> {
                       Center(
                         child: SizedBox(
                           width: 350,
+                          //username
                           child: TextFormField(
                             controller: username,
                             // validator: MultiValidator([
@@ -438,12 +444,11 @@ class _registerState extends State<register> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Center(
                         child: SizedBox(
                           width: 350,
+                          //password
                           child: TextFormField(
                             controller: password,
                             obscureText: true,
@@ -472,12 +477,11 @@ class _registerState extends State<register> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Center(
                         child: SizedBox(
                           width: 350,
+                          // fullname
                           child: TextFormField(
                             controller: fullname,
                             style: TextStyle(color: Colors.white),
@@ -501,19 +505,20 @@ class _registerState extends State<register> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Center(
                         child: SizedBox(
                           width: 350,
+                          // email
                           child: TextFormField(
                             controller: user_email,
                             // obscureText: true,
-                            // validator: MultiValidator([
-                            //   RequiredValidator(errorText: 'enter a valid email address'),
-                            //   EmailValidator(errorText: 'this field is required'),
-                            // ]),
+                            validator: MultiValidator([
+                              RequiredValidator(
+                                  errorText: 'enter a valid email address'),
+                              EmailValidator(
+                                  errorText: 'this field is required'),
+                            ]),
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               labelText: 'email',
@@ -535,9 +540,8 @@ class _registerState extends State<register> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20),
+                      //ปุ่ม register
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.whiteColor,
@@ -560,10 +564,9 @@ class _registerState extends State<register> {
                           addUser();
                         },
                       ),
-                      SizedBox(
-                        height: 25,
-                      ),
+                      SizedBox(height: 25),
                       Center(
+                        //ยังไม่มีบัญชี
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

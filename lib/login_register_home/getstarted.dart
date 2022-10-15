@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'login_regis.dart';
 
-
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -22,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/2.png'),
+            image: AssetImage('images/getimg.png'),
             fit: BoxFit.cover,
           ),
         ),
