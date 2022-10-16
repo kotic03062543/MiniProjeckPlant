@@ -121,7 +121,7 @@ class _RecomPlantState extends State<RecomPlant> {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     )),
-                // margin: EdgeInsets.only(left: 20,right: 20),
+                // margin: EdgeInsets.only(right: 10),
 
                 child: Center(
                   child:

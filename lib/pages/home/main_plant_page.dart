@@ -42,7 +42,7 @@ class _MainPlantPageState extends State<MainPlantPage> {
       // 'user_id': widget.id01,
     });
     var data = jsonDecode(response1.body);
-    print(data);
+    // print(data);
     // String user_id = data[0]['user_id'].toString();
   }
 

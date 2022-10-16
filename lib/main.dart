@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
      
-      home: HomeScreen(),
+      home: Launcher(id: '',),
       // home: CartPage(),
       // home: SplashScreen(),
       // home: PopularPlantDetail(),
