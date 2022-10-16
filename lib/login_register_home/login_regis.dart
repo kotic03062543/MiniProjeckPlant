@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -171,7 +171,7 @@ class _loginState extends State<LoginRegis> {
                       controller: formusersname,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: 'User name',
+                        labelText: 'Username',
                         labelStyle: Input,
                         contentPadding: EdgeInsets.all(20),
                         enabledBorder: OutlineInputBorder(
@@ -201,7 +201,7 @@ class _loginState extends State<LoginRegis> {
                       obscureText: true,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: 'password',
+                        labelText: 'Password',
                         labelStyle: Input,
                         contentPadding: EdgeInsets.all(20),
                         enabledBorder: OutlineInputBorder(
@@ -226,8 +226,12 @@ class _loginState extends State<LoginRegis> {
                 TextButton(
                   onPressed: () {},
                   child: Text(
-                    'Forget password?',
-                    style: Chike,
+                    'Forget Password?',
+                    style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        decoration: TextDecoration.underline),
                   ),
                 ),
                 SizedBox(
@@ -242,9 +246,8 @@ class _loginState extends State<LoginRegis> {
                           {checkLogin(formusersname.text, formpassword.text)},
                       child: Text(
                         'Login',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.w600),
                       ),
                       style: ElevatedButton.styleFrom(
                         primary: Color.fromARGB(255, 255, 255, 255),
@@ -264,22 +267,30 @@ class _loginState extends State<LoginRegis> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Don’t have account yet?',
-                        style: GoogleFonts.kanit(
+                        'Don’t have account yet ?',
+                        style: GoogleFonts.poppins(
                             color: Colors.white, fontSize: 15),
                       ),
                       TextButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
                               builder: (context) {
                                 return register();
                               },
-                            ));
-                          },
-                          child: Text(
-                            'Sign up',
-                            style: Chike,
-                          )),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Sign up',
+                          style: GoogleFonts.poppins(
+                              decoration: TextDecoration.underline,
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -547,12 +558,13 @@ class _registerState extends State<register> {
                         ),
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 120, vertical: 15),
+                              horizontal: 120, vertical: 10),
                           child: Text(
                             "Register",
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: AppColors.maincolor,
                               fontSize: 20,
+                              fontWeight: FontWeight.w600
                             ),
                           ),
                         ),
@@ -570,7 +582,7 @@ class _registerState extends State<register> {
                             Text(
                               'Already have an account ?',
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                                  GoogleFonts.poppins(color: Colors.white, fontSize: 16),
                             ),
                             TextButton(
                                 onPressed: () {
@@ -582,8 +594,13 @@ class _registerState extends State<register> {
                                 },
                                 child: Text(
                                   'Back to login.',
-                                  style: Chike,
-                                )),
+                                  style: GoogleFonts.poppins(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                ),),
                           ],
                         ),
                       ),

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 
       // home: HomeScreen(),
       // home: HomeScreen(),
-      home: TrackOrder(),
+      home: LoginRegis(),
       // home: PopularPlantDetail(),
       // home: LoginRegis(),
     );
