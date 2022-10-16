@@ -44,12 +44,17 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
-     
-      home: HomeScreen(),
+
+      // home: HomeScreen(),
+      // home: HomeScreen(),
+      home: TrackOrder(),
+      // home: PopularPlantDetail(),
+      // home: LoginRegis(),
       // home: CartPage(),
       // home: SplashScreen(),
       // home: PopularPlantDetail(),
         // home: MainPlantPage(),
+
     );
   }
 }
