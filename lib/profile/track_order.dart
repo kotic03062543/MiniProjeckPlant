@@ -49,13 +49,19 @@ class _TrackOrderState extends State<TrackOrder> {
                 width: double.infinity,
                 height: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
                   color: Colors.red[100],
+                  borderRadius: BorderRadius.circular(25),
+                  image: DecorationImage(
+                    image: AssetImage('images/sales.png'),
+                    fit: BoxFit.cover,
+                  // borderRadius: BorderRadius.circular(25),
+                  // color: Colors.red[100],
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 70, top: 70),
+              padding: EdgeInsets.only(left: 50, top: 70),
               child: Text(
                 "Account name",
                 style: GoogleFonts.poppins(
@@ -65,7 +71,7 @@ class _TrackOrderState extends State<TrackOrder> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 122, top: 80),
+              padding: EdgeInsets.only(left: 102, top: 80),
               child: TextButton(
                 onPressed: () {},
                 child: Text(
@@ -84,7 +90,7 @@ class _TrackOrderState extends State<TrackOrder> {
                 icon: Icon(
                   Icons.edit_outlined,
                 ),
-                iconSize: 30,
+                iconSize: 25,
                 color: Colors.black,
                 alignment: Alignment.bottomLeft,
                 onPressed: () {},
@@ -98,13 +104,14 @@ class _TrackOrderState extends State<TrackOrder> {
                     height: 50,
                     decoration: BoxDecoration(
                       border: Border.all(width: 2, color: Colors.grey.shade800),
-                      borderRadius: BorderRadius.all(Radius.circular(13) 
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(13)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.only(right: 275),
-                      child: Icon(FontAwesomeIcons.solidCreditCard, color: Colors.grey.shade800,), 
-                      
+                      child: Icon(
+                        FontAwesomeIcons.solidCreditCard,
+                        color: Colors.grey.shade800,
+                      ),
                     ),
                   ),
                   onTap: () {}),
