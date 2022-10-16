@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'login_regis.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/getimg.png'),
+            image: AssetImage('images/hasan-almasi.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -64,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     label: Text(
                       'Get Started',
-                      style: TextStyle(fontSize: 24, color: Colors.black),
+                      style: GoogleFonts.poppins(
+                        fontSize: 24, 
+                        fontWeight: FontWeight.w700,
+                        color: Colors.grey[850]),
                     ),
                   ),
                 )

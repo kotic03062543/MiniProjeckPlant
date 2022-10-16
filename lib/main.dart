@@ -18,7 +18,6 @@ import 'pages/plant_shop/cart_page.dart';
 
 import 'helper/dependencies.dart' as dep;
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dep.init();
@@ -44,12 +43,13 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
-     
-      home: Launcher(id: '',),
+      home: TrackOrder(),
+      // home: PopularPlantDetail(),
+      // home: LoginRegis(),
       // home: CartPage(),
       // home: SplashScreen(),
       // home: PopularPlantDetail(),
-        // home: MainPlantPage(),
+      // home: MainPlantPage(),
     );
   }
 }
