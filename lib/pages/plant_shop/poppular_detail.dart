@@ -1,20 +1,51 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
 import 'package:myfirstapp/until/dimension.dart';
-import 'package:myfirstapp/widgets/app_column.dart';
 import 'package:myfirstapp/widgets/app_icon.dart';
-import 'package:myfirstapp/widgets/expandeble_text.dart';
-import 'package:readmore/readmore.dart';
+import 'package:myfirstapp/widgets/mediam_text.dart';
 import 'package:unicons/unicons.dart';
-
 import '../../until/colors.dart';
 import '../../widgets/big_text.dart';
-import '../../widgets/icon_and_text_widget.dart';
 import '../../widgets/small_text.dart';
 
-class PopularPlantDetail extends StatelessWidget {
-  const PopularPlantDetail({Key? key}) : super(key: key);
+import 'package:http/http.dart' as http;
+
+class PopularPlantDetail extends StatefulWidget {
+  final List product;
+  final int index;
+  PopularPlantDetail({Key? key, required this.product, required this.index})
+      : super(key: key);
+
+  @override
+  State<PopularPlantDetail> createState() => _PopularPlantDetailState();
+}
+
+class _PopularPlantDetailState extends State<PopularPlantDetail> {
+  TextEditingController product_name = TextEditingController();
+  TextEditingController product_detail = TextEditingController();
+  TextEditingController product_water = TextEditingController();
+  TextEditingController product_light = TextEditingController();
+  TextEditingController product_fer = TextEditingController();
+  TextEditingController product_pic = TextEditingController();
+  TextEditingController product_price = TextEditingController();
+  TextEditingController product_star = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.index != null) {
+      product_name.text = widget.product[widget.index]['product_name'];
+      product_detail.text = widget.product[widget.index]['product_detail'];
+      product_water.text = widget.product[widget.index]['product_water'];
+      product_light.text = widget.product[widget.index]['product_light'];
+      product_fer.text = widget.product[widget.index]['product_fer'];
+      product_pic.text = widget.product[widget.index]['product_pic'];
+      product_price.text = widget.product[widget.index]['product_price'];
+      product_star.text = widget.product[widget.index]['product_star'];
+      //  print('Name'+product_name.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +63,7 @@ class PopularPlantDetail extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('images/todd.jpg'),
+                  image: AssetImage('images/' + product_pic.text),
                 ),
               ),
             ),
@@ -46,8 +77,20 @@ class PopularPlantDetail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                AppIcon(icon: UniconsLine.angle_left_b),
-                AppIcon(icon: UniconsLine.shopping_cart),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: AppIcon(icon: UniconsLine.angle_left_b),
+                  iconSize: 50,
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: AppIcon(icon: UniconsLine.shopping_cart),
+                  iconSize: 50,
+                ),
               ],
             ),
           ),
@@ -72,7 +115,35 @@ class PopularPlantDetail extends StatelessWidget {
                 // ignore: prefer_const_literals_to_create_immutables
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppColumn(text: 'Castus Malai'),
+                  BigText(
+                    text: product_name.text,
+                    size: 30,
+                  ),
+                  SizedBox(
+                    height: Dimensions.height20,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 3),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          children: List.generate(
+                            5,
+                            (index) {
+                              return Icon(
+                                Icons.star,
+                                color: AppColors.maincolor,
+                                size: 15,
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(width: Dimensions.width15,),
+                        SmallText(text: product_star.text),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: Dimensions.height20),
                   //type overview
                   BigText(text: 'Overview', color: Colors.black54),
@@ -92,7 +163,7 @@ class PopularPlantDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SmallText(
-                                  text: '250ml',
+                                  text: product_water.text,
                                   color: AppColors.maincolor,
                                 ),
                                 SizedBox(
@@ -114,7 +185,7 @@ class PopularPlantDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SmallText(
-                                  text: '35-40%',
+                                  text: product_light.text,
                                   color: AppColors.maincolor,
                                 ),
                                 SizedBox(
@@ -136,7 +207,7 @@ class PopularPlantDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SmallText(
-                                  text: '250gm',
+                                  text: product_fer.text,
                                   color: AppColors.maincolor,
                                 ),
                                 SizedBox(
@@ -151,17 +222,21 @@ class PopularPlantDetail extends StatelessWidget {
                     ),
                   ),
                   //
-                  SizedBox(height: Dimensions.height20),
-                  BigText(text: 'Introduce', color: Colors.black54),
+                  SizedBox(height: Dimensions.height20 * 1.5),
+                  BigText(text: 'Details', color: Colors.black54),
                   SizedBox(
                     height: Dimensions.height20,
                   ),
                   //detail
                   Expanded(
-                      child: SingleChildScrollView(
-                          child: ExpandableText(
-                              text:
-                                  'It is a cactus in the family of mammillaries with fluffy white hairs covering its body, similar to cat hair. Therefore, this species of cactus was named a cats fur. And there will be sharp thorns with curved ends hidden under the hairs. In addition to having a cute face The flowers of the cats hair also look cute. The flowers are small, pink on top It is a cactus in the family of mammillaries with fluffy white hairs covering its body.')))
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          MediamText(text: product_detail.text),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -200,7 +275,7 @@ class PopularPlantDetail extends StatelessWidget {
               padding:
                   EdgeInsets.only(top: 15, bottom: 15, right: 20, left: 20),
               child: BigText(
-                text: '\$10 | Add to cart',
+                text: '\$10 | Add',
                 color: Colors.white,
               ),
               decoration: BoxDecoration(

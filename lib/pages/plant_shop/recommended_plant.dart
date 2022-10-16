@@ -1,6 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, equal_keys_in_map, non_constant_identifier_names
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:myfirstapp/pages/plant_shop/cart_page.dart';
+
 import 'package:myfirstapp/until/colors.dart';
 import 'package:myfirstapp/until/dimension.dart';
 import 'package:myfirstapp/widgets/app_icon.dart';
@@ -12,8 +15,72 @@ import 'package:unicons/unicons.dart';
 
 import '../../widgets/small_text.dart';
 
-class RecomPlant extends StatelessWidget {
-  const RecomPlant({Key? key}) : super(key: key);
+import 'package:http/http.dart' as http;
+
+class RecomPlant extends StatefulWidget {
+  // final String product_id;
+  final List product;
+  final int index;
+
+  RecomPlant({Key? key, required this.product, required this.index})
+      : super(key: key);
+
+  @override
+  State<RecomPlant> createState() => _RecomPlantState();
+}
+
+class _RecomPlantState extends State<RecomPlant> {
+  TextEditingController product_name = TextEditingController();
+  TextEditingController product_detail = TextEditingController();
+  TextEditingController product_water = TextEditingController();
+  TextEditingController product_light = TextEditingController();
+  TextEditingController product_fer = TextEditingController();
+  TextEditingController product_pic = TextEditingController();
+  TextEditingController product_price = TextEditingController();
+
+  bool editMode = false;
+
+  // Future RecomPlant() async {
+  //   if (editMode) {
+  //     // var url = 'https://pattyteacher.000webhostapp.com/edit.php';
+  //     var url = Uri.parse(
+  //         "https://plantyshop.vitinias.com/connectPHP/select_product.php");
+      // await http.post(url, body: {
+      //   'product_name': product_name.text,
+      //   'product_detail': product_detail.text,
+      //   'product_detail': product_water.text,
+      //   'product_detail': product_light.text,
+      //   'product_detail': product_fer.text,
+      //   'product_pic': product_pic.text,
+      //   'product_price': product_price.text,
+
+      //   // 'password': password.text,
+      // });
+      // print(product_name.text);
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => Home(),
+      //   ),
+      // );
+    // }
+  // }
+  @override
+  void initState() {
+    super.initState();
+    if (widget.index != null) {
+      // editMode = true;
+      product_name.text = widget.product[widget.index]['product_name'];
+      product_detail.text = widget.product[widget.index]['product_detail'];
+      product_water.text = widget.product[widget.index]['product_water'];
+      product_light.text = widget.product[widget.index]['product_light'];
+      product_fer.text = widget.product[widget.index]['product_fer'];
+      product_pic.text = widget.product[widget.index]['product_pic'];
+      product_price.text = widget.product[widget.index]['product_price'];
+      //  print('Name'+product_name.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +92,20 @@ class RecomPlant extends StatelessWidget {
           SliverAppBar(
             toolbarHeight: 80,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.end,
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                AppIcon(icon: UniconsLine.times),
-                AppIcon(icon: UniconsLine.shopping_cart)
+                Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return CartPage();
+                    }));
+                  },
+                  child: (AppIcon(icon: UniconsLine.shopping_cart)),
+                ),
+                // AppIcon(icon: UniconsLine.times),
               ],
             ),
             bottom: PreferredSize(
@@ -47,16 +124,17 @@ class RecomPlant extends StatelessWidget {
                 // margin: EdgeInsets.only(left: 20,right: 20),
 
                 child: Center(
-                  child: BigText(size: Dimensions.font26, text: 'Castus Malai'),
+                  child:
+                      BigText(size: Dimensions.font26, text: product_name.text),
                 ),
               ),
             ),
             pinned: true,
-            backgroundColor: AppColors.maincolor,
+            backgroundColor: AppColors.maincolorgreenme,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                'images/todd.jpg',
+                'images/${product_pic.text}',
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -89,7 +167,7 @@ class RecomPlant extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SmallText(
-                                text: '250ml',
+                                text: product_water.text,
                                 color: AppColors.maincolor,
                               ),
                               SizedBox(
@@ -111,7 +189,7 @@ class RecomPlant extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SmallText(
-                                text: '35-40%',
+                                text: product_light.text,
                                 color: AppColors.maincolor,
                               ),
                               SizedBox(
@@ -133,7 +211,7 @@ class RecomPlant extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SmallText(
-                                text: '250gm',
+                                text: product_fer.text,
                                 color: AppColors.maincolor,
                               ),
                               SizedBox(
@@ -153,8 +231,7 @@ class RecomPlant extends StatelessWidget {
                       right: Dimensions.width20,
                       top: Dimensions.width20),
                   child: MediamText(
-                    text:
-                        'It is a cactus in the family of mammillaries with fluffy white hairs covering its body, similar to cat hair. Therefore, this species of cactus was named a cats fur. And there will be sharp thorns with curved ends hidden under the hairs. In addition to having a cute face The flowers of the cats hair also look cute. The flowers are small, pink on top It is a cactus in the family of mammillaries with fluffy white hairs covering its body.It is a cactus in the family of mammillaries with fluffy white hairs covering its body, similar to cat hair. Therefore, this species of cactus was named a cats fur. And there will be sharp thorns with curved ends hidden under the hairs. In addition to having a cute face The flowers of the cats hair also look cute. The flowers are small, pink on top It is a cactus in the family of mammillaries with fluffy white hairs covering its bodyIt is a cactus in the family of mammillaries with fluffy white hairs covering its body, similar to cat hair. Therefore, this species of cactus was named a cats fur. And there will be sharp thorns with curved ends hidden under the hairs. In addition to having a cute face The flowers of the cats hair also look cute. The flowers are small, pink on top It is a cactus in the family of mammillaries with fluffy white hairs covering its body',
+                    text: product_detail.text,
                   ),
                 ),
               ],
@@ -176,7 +253,7 @@ class RecomPlant extends StatelessWidget {
                   icon: UniconsLine.minus,
                 ),
                 BigText(
-                  text: '\$12.88' + ' x ' + '0',
+                  text: '฿${product_price.text} x 0',
                   color: AppColors.mainblackcolor,
                 ),
                 AppIcon(
@@ -216,7 +293,7 @@ class RecomPlant extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       color: AppColors.maincolor),
                   child: BigText(
-                    text: '\$10 | Add',
+                    text: '฿${product_price.text} | Add',
                     color: Colors.white,
                   ),
                 ),

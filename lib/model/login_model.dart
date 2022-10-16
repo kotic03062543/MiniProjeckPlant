@@ -1,35 +1,36 @@
 class ModelUserMember {
   String? username;
+  String? password;
+  String? fullname;
+  String? user_email;
 
   ModelUserMember({
     this.username,
+    this.password,
+    this.fullname,
+    this.user_email,
   });
 }
 
 class ModelProducts {
   String? product_name;
   String? product_detail;
-  String? product_price;
-  String? product_amouunt;
+  double? product_price;
+  int? product_amount;
+  int? product_pic;
+  int? product_type;
  
 
   ModelProducts({
     this.product_name,
     this.product_detail,
     this.product_price,
-    this.product_amouunt,
+    this.product_amount,
+    this.product_pic,
+    this.product_type,
+
   });
 }
 
-  // Weather({
-  //   this.lat,
-  //   this.lon,
-  //   this.decoration,
-  //   this.cityname,
-  //   this.temp,
-  //   this.humidity,
-  //   this.feels_like,
-  //   this.pressure,
-  //   this.icon,
-  // });
+ 
 
