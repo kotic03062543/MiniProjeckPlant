@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors, unused_import
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,11 +43,12 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
+
+      home: SplashScreen(),
       // home: TrackOrder(),
       // home: PopularPlantDetail(),
       // home: LoginRegis(),
       // home: CartPage(),
-      home: SplashScreen(),
       // home: PopularPlantDetail(),
       // home: MainPlantPage(),
     );
