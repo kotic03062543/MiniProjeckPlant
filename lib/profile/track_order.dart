@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myfirstapp/profile/edit_profile.dart';
 
 class TrackOrder extends StatefulWidget {
   TrackOrder({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _TrackOrderState extends State<TrackOrder> {
             onPressed: () {},
           ), //IconButton
         ],
-        elevation: 0,
+        elevation: 1,
         leading: IconButton(
           icon: Icon(FontAwesomeIcons.barsStaggered, color: Colors.grey[850]),
           tooltip: 'Bar',
@@ -54,8 +55,8 @@ class _TrackOrderState extends State<TrackOrder> {
                   image: DecorationImage(
                     image: AssetImage('images/sales.png'),
                     fit: BoxFit.cover,
-                  // borderRadius: BorderRadius.circular(25),
-                  // color: Colors.red[100],
+                    // borderRadius: BorderRadius.circular(25),
+                    // color: Colors.red[100],
                   ),
                 ),
               ),
@@ -73,7 +74,10 @@ class _TrackOrderState extends State<TrackOrder> {
             Padding(
               padding: EdgeInsets.only(left: 102, top: 80),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => EditProfile()));
+                },
                 child: Text(
                   'Edit Profile',
                   style: GoogleFonts.poppins(
@@ -93,7 +97,11 @@ class _TrackOrderState extends State<TrackOrder> {
                 iconSize: 25,
                 color: Colors.black,
                 alignment: Alignment.bottomLeft,
-                onPressed: () {},
+                onPressed: () {
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => EditProfile(user: list,
+                  //                   index: index,)));
+                },
               ),
             ),
             Padding(

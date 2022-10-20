@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, sort_child_properties_last, non_constant_identifier_names, camel_case_types, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
