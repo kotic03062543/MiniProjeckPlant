@@ -1,38 +1,20 @@
-import 'dart:async';
-import 'dart:convert';
+// ignore_for_file: avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-// import 'package:fluttermysql/pages/adduser.dart';
-// import 'package:fluttermysql/pages/edituser.dart';
-// import 'package:fluttermysql/pages/login.dart';
-// import 'package:fluttermysql/pages/profile.dart';
-import 'package:http/http.dart' as http;
 
 class ProFile extends StatefulWidget {
-  static const routeName = '/';
+  final String user_id;
+  ProFile({Key? key, required  this.user_id}) : super(key: key);
+
   @override
-  _State createState() => _State();
+  State<ProFile> createState() => _ProFileState();
 }
 
-class _State extends State<ProFile> {
-  @override
-  void initState() {
-    super.initState();
-    getdata();
-  }
-
-  Future getdata() async {
-    // var url = "https://pattyteacher.000webhostapp.com/select.php";
-    var url = Uri.parse("http://10.0.2.2/connectPHP/select.php");
-    var response = await http.get(url);
-    print(response.body);
-    return json.decode(response.body);
-  }
-
+class _ProFileState extends State<ProFile> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text('Profile'),
+    return Container(
+      child: Text('ProFile'),
     );
   }
 }

@@ -20,7 +20,9 @@ import '../plant_shop/recommended_plant.dart';
 import 'package:get/get.dart';
 
 class PlantPageBody extends StatefulWidget {
-  PlantPageBody({Key? key}) : super(key: key);
+  final String user_id;
+
+  PlantPageBody({Key? key, required this.user_id}) : super(key: key);
 
   @override
   State<PlantPageBody> createState() => _PlantPageBodyState();
@@ -66,15 +68,15 @@ class _PlantPageBodyState extends State<PlantPageBody> {
     return json.decode(response.body);
   }
 
-  Future getdatapopular() async {
-    // var url = "http://localhost/addressbook/select.php";
-    var url = Uri.parse(
-        "https://plantyshop.vitinias.com/connectPHP/select_product.php");
-    var response = await http.get(url);
-    var data1 = jsonDecode(response.body);
-    // print(data1);
-    return json.decode(response.body);
-  }
+  // Future getdatapopular() async {
+  //   // var url = "http://localhost/addressbook/select.php";
+  //   var url = Uri.parse(
+  //       "https://plantyshop.vitinias.com/connectPHP/product_ratehight.php");
+  //   var response = await http.get(url);
+  //   var data1 = jsonDecode(response.body);
+  //   // print(data1);
+  //   return json.decode(response.body);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +87,7 @@ class _PlantPageBodyState extends State<PlantPageBody> {
           padding: EdgeInsets.only(left: 20, right: 20),
           height: Dimensions.pageView,
           child: FutureBuilder(
-            future: getdatapopular(),
+            future: getdata(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) print(snapshot.error);
               return snapshot.hasData
@@ -110,111 +112,114 @@ class _PlantPageBodyState extends State<PlantPageBody> {
                               ),
                             ),
                             //อันที่ซ้อนกัน
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: Dimensions.pageViewTextContainer,
-                                margin: EdgeInsets.only(
-                                    left: 30, right: 30, bottom: 30),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0xFFEDE4E0),
-                                      blurRadius: 3.0,
-                                      offset: Offset(3, 10),
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: Offset(-5, 0),
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: Offset(5, 0),
-                                    ),
-                                  ],
-                                ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => PopularPlantDetail(
+                                      user_id: widget.user_id,
+                                      product: list,
+                                      index: index,
+                                    ));
+                              },
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
                                 child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 0, left: 15, right: 15),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                PopularPlantDetail(
-                                              product: list,
-                                              index: index,
-                                            ),
-                                          ),
-                                        ),
-                                        child: BigText(
-                                          text: list[index]['product_name'],
-                                        ),
+                                  padding:
+                                      EdgeInsets.only(top: Dimensions.height15),
+                                  height: Dimensions.pageViewTextContainer,
+                                  margin: EdgeInsets.only(
+                                      left: 30, right: 30, bottom: 30),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color(0xFFEDE4E0),
+                                        blurRadius: 3.0,
+                                        offset: Offset(3, 10),
                                       ),
-                                      // SizedBox(height: Dimensions.height10),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 3),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Wrap(
-                                              children: List.generate(
-                                                5,
-                                                (index) {
-                                                  return Icon(
-                                                    Icons.star,
-                                                    color: AppColors.maincolor,
-                                                    size: 15,
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                            SizedBox(width: 3),
-                                            SmallText(
-                                                text: list[index]
-                                                    ['product_star']),
-                                            SizedBox(width: 10),
-                                            SmallText(text: '350'),
-                                            SizedBox(width: 3),
-                                            SmallText(text: 'comments'),
-                                            SizedBox(
-                                                height: Dimensions.height10),
-                                          ],
-                                        ),
+                                      BoxShadow(
+                                        color: Colors.white,
+                                        offset: Offset(-5, 0),
                                       ),
-                                      SizedBox(
-                                          height: Dimensions.height10 * 1.3),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          IconAndTextWidget(
-                                            icon: Icons.circle_sharp,
-                                            text: list[index]['type_name'],
-                                            iconColor: AppColors.iconColor1,
-                                          ),
-                                          IconAndTextWidget(
-                                            icon: UniconsLine.bitcoin,
-                                            text: list[index]['product_price'],
-                                            iconColor: AppColors.iconColor2,
-                                          ),
-                                          IconAndTextWidget(
-                                            icon: UniconsLine.telegram,
-                                            text: list[index]['product_amount'],
-                                            iconColor: AppColors.iconColor3,
-                                          ),
-                                        ],
+                                      BoxShadow(
+                                        color: Colors.white,
+                                        offset: Offset(5, 0),
                                       ),
                                     ],
+                                  ),
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: 0, left: 15, right: 15),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        BigText(
+                                          text: list[index]['product_name'],
+                                        ),
+                                        // SizedBox(height: Dimensions.height10),
+                                        Container(
+                                          margin: EdgeInsets.only(left: 3),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Wrap(
+                                                children: List.generate(
+                                                  5,
+                                                  (index) {
+                                                    return Icon(
+                                                      Icons.star,
+                                                      color:
+                                                          AppColors.maincolor,
+                                                      size: 15,
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              SizedBox(width: 3),
+                                              SmallText(
+                                                  text: list[index]
+                                                      ['product_star']),
+                                              SizedBox(width: 10),
+                                              SmallText(text: '350'),
+                                              SizedBox(width: 3),
+                                              SmallText(text: 'comments'),
+                                              SizedBox(
+                                                  height: Dimensions.height10),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height: Dimensions.height10 * 1.3),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconAndTextWidget(
+                                              icon: Icons.circle_sharp,
+                                              text: list[index]['type_name'],
+                                              iconColor: AppColors.iconColor1,
+                                            ),
+                                            IconAndTextWidget(
+                                              icon: UniconsLine.bitcoin,
+                                              text: list[index]
+                                                  ['product_price'],
+                                              iconColor: AppColors.iconColor2,
+                                            ),
+                                            IconAndTextWidget(
+                                              icon: UniconsLine.telegram,
+                                              text: list[index]
+                                                  ['product_amount'],
+                                              iconColor: AppColors.iconColor3,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -312,83 +317,92 @@ class _PlantPageBodyState extends State<PlantPageBody> {
                                 ),
                                 //text menu
                                 Expanded(
-                                  child: Container(
-                                    height: 110,
-                                    // width: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(20),
-                                        bottomRight: Radius.circular(20),
-                                      ),
-                                      color: AppColors.greencolorlow,
-                                    ),
-                                    child: Padding(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(
+                                        RecomPlant(
+                                          user_id: widget.user_id,
+                                          product: list,
+                                          index: index,
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
                                       padding: EdgeInsets.only(
-                                        left: Dimensions.width15,
-                                        right: Dimensions.width20,
+                                          left: Dimensions.width10/1.5),
+                                      height: 110,
+                                      // width: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                        ),
+                                        color: AppColors.greencolorlow,
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          TextButton(
-                                            onPressed: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RecomPlant(
-                                                  product: list,
-                                                  index: index,
-                                                ),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: Dimensions.width15,
+                                          right: Dimensions.width20,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: Dimensions.width10*1.4),
+                                              child: BigText(
+                                                text: list[index]['product_name'],
                                               ),
                                             ),
-                                            child: BigText(
-                                              text: list[index]['product_name'],
+                                            SizedBox(height: Dimensions.height10/2),
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left:
+                                                      Dimensions.width10 * 1.5),
+                                              child: SmallText(
+                                                  text: list[index]
+                                                      ['product_detail']),
                                             ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: Dimensions.width10 * 1.5),
-                                            child: SmallText(
-                                                text: list[index]
-                                                    ['product_detail']),
-                                          ),
-                                          SizedBox(height: Dimensions.height10),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: Dimensions.width10 * 1.2),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                IconAndTextWidget(
-                                                  icon: Icons.circle_sharp,
-                                                  text: list[index]
-                                                      ['type_name'],
-                                                  iconColor:
-                                                      AppColors.iconColor1,
-                                                ),
-                                                IconAndTextWidget(
-                                                  icon: UniconsLine.bitcoin,
-                                                  text: list[index]
-                                                      ['product_price'],
-                                                  iconColor:
-                                                      AppColors.iconColor2,
-                                                ),
-                                                IconAndTextWidget(
-                                                  icon: UniconsLine.telegram,
-                                                  text: list[index]
-                                                      ['product_amount'],
-                                                  iconColor:
-                                                      AppColors.iconColor3,
-                                                ),
-                                              ],
+                                            SizedBox(
+                                                height: Dimensions.height10),
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left:
+                                                      Dimensions.width10 * 1.2),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  IconAndTextWidget(
+                                                    icon: Icons.circle_sharp,
+                                                    text: list[index]
+                                                        ['type_name'],
+                                                    iconColor:
+                                                        AppColors.iconColor1,
+                                                  ),
+                                                  IconAndTextWidget(
+                                                    icon: UniconsLine.bitcoin,
+                                                    text: list[index]
+                                                        ['product_price'],
+                                                    iconColor:
+                                                        AppColors.iconColor2,
+                                                  ),
+                                                  IconAndTextWidget(
+                                                    icon: UniconsLine.telegram,
+                                                    text: list[index]
+                                                        ['product_amount'],
+                                                    iconColor:
+                                                        AppColors.iconColor3,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

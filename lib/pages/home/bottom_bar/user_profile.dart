@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:myfirstapp/until/colors.dart';
 
 class UserProfile extends StatefulWidget {
-  UserProfile({Key? key}) : super(key: key);
+  UserProfile({Key? key, required String user_id}) : super(key: key);
 
   @override
   State<UserProfile> createState() => _UserProfileState();

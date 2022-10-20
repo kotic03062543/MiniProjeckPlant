@@ -67,7 +67,7 @@ class _loginState extends State<LoginRegis> {
       PageTransition(
         type: PageTransitionType.rightToLeft,
         child: Launcher(
-          id: user_id,
+          user_id: user_id,
         ),
       ),
     );
@@ -95,7 +95,7 @@ class _loginState extends State<LoginRegis> {
 
     fToast.showToast(
       child: toast,
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.CENTER,
       toastDuration: Duration(seconds: 3),
     );
   }
@@ -122,7 +122,7 @@ class _loginState extends State<LoginRegis> {
 
     fToast.showToast(
       child: toast,
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.CENTER,
       toastDuration: Duration(seconds: 3),
     );
   }
@@ -352,7 +352,7 @@ class _registerState extends State<register> {
         Fluttertoast.showToast(
             msg: "Username Or Email already exist",
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
+            gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 5,
             backgroundColor: Colors.red,
             textColor: Color.fromARGB(255, 255, 255, 255),
@@ -361,10 +361,10 @@ class _registerState extends State<register> {
         Fluttertoast.showToast(
             msg: "Register Success",
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
+            gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 5,
-            backgroundColor: AppColors.maincolor,
-            textColor: Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: AppColors.yellowcolor,
+            textColor: Color.fromARGB(255, 0, 0, 0),
             fontSize: 16.0);
         Navigator.push(
           context,

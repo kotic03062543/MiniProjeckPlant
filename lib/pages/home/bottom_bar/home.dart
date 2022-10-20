@@ -1,96 +1,103 @@
-// ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe, non_constant_identifier_names, avoid_print
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
 import 'package:myfirstapp/until/colors.dart';
-import '../../../model/login_model.dart';
+
 import '../main_plant_page.dart';
 import 'favorite.dart';
 import 'profile.dart';
 import 'shopping_cart.dart';
 
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 class Launcher extends StatefulWidget {
-  static const routeName = '/';
-  String id;
+  final String user_id;
 
-  Launcher({Key? key, required this.id}) : super(key: key);
+  const Launcher({Key? key, required this.user_id}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _LauncherState();
-  }
+  State<Launcher> createState() => _LauncherState();
 }
 
 class _LauncherState extends State<Launcher> {
   @override
+  int pageIndex = 0;
+
   void initState() {
     super.initState();
-    getmember();
-    // print('hometest : ${widget.id}');
-  }
-
-  Future getmember() async {
-    var url =
-        Uri.parse('https://plantyshop.vitinias.com/connectPHP/select.php');
-    var response1 = await http.post(url, body: {
-      'user_id': widget.id,
-    });
-    var data = jsonDecode(response1.body);
-    print(data);
-    String user_id = data[0]['user_id'].toString();
-  
-}
-  // static get data => data;
-
-  int _selectedIndex = 0;
-  final List _pageWidget = [
-    MainPlantPage(),
-    PoppuLar(),
-    ShopCart(),
-    ProFile(),
-  ];
-
-  final List<BottomNavigationBarItem> _menuBar = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Icon(UniconsLine.estate),
-      label: 'Home',
-      backgroundColor: AppColors.whiteColor,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(UniconsLine.heart),
-      label: 'Favorite',
-      backgroundColor: AppColors.whiteColor,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(UniconsLine.shopping_cart),
-      label: 'Cart',
-      backgroundColor: AppColors.whiteColor,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(UniconsLine.user),
-      label: 'ProFile',
-      backgroundColor: AppColors.whiteColor,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    // print('Test' + widget.user_id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pageWidget.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: _menuBar,
-        currentIndex: _selectedIndex,
-        selectedItemColor: AppColors.maincolor,
-        unselectedItemColor: AppColors.iconColor0,
-        onTap: _onItemTapped,
+      bottomNavigationBar: getFooter(),
+      body: getBody(),
+    );
+  }
+  //Body
+  Widget getBody() {
+    return IndexedStack(
+      index: pageIndex,
+      children: [
+        MainPlantPage(user_id: widget.user_id),
+        FavoreitPage(user_id: widget.user_id),
+        ShopCart(user_id: widget.user_id),
+        ProFile(user_id: widget.user_id),
+      ],
+    );
+  }
+
+  //FOOTER
+  Widget getFooter() {
+    List items = [
+      "images/user.png",
+      "images/heart.png",
+      "images/shop.png",
+      "images/pro.png",
+    ];
+    var size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width,
+      height: 60,
+      decoration: BoxDecoration(color: AppColors.whiteColor, boxShadow: [
+        BoxShadow(
+            color: const Color(0Xff000000).withOpacity(0.12),
+            blurRadius: 5,
+            offset: const Offset(0, -3)),
+      ]),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30, top: 7),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(items.length, (index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    pageIndex = index;
+                  });
+                },
+                child: Column(
+                  children: [
+                    Image.asset(
+                      items[index],
+                      width: 40,
+                      height: 40,
+                    ),
+                    pageIndex == index
+                        ? AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            child: Container(
+                              height: 6,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  color: AppColors.maincolor,
+                                  borderRadius: BorderRadius.circular(100)),
+                            ),
+                          )
+                        : Container()
+                  ],
+                ),
+              );
+            })),
       ),
     );
   }
