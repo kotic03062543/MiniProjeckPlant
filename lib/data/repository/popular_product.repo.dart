@@ -9,7 +9,7 @@ class PoppolarProRepo extends GetxService {
   PoppolarProRepo({required this.apiClient});
 
   Future<Response> getPopularProductList() async {
-    return await apiClient.getData(AppConstants.POPULAR_PRODUCT_URI );
+    return await apiClient.getDatapop(AppConstants.POPULAR_PRODUCT_URI );
 
   }
 }

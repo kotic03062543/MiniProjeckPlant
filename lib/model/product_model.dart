@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_this
+// ignore_for_file: unnecessary_this, unused_field
 
 class Product {
   int? _totalSize;
@@ -6,7 +6,7 @@ class Product {
   int? _offset;
   late List<ProductModel> _products;
   List<ProductModel> get products => _products;
-  
+
   Product(
       {required totalSize,
       required typeId,
@@ -44,7 +44,8 @@ class ProductModel {
   int? typeId;
 
   ProductModel(
-      {this.id,
+      {
+        this.id,
       this.name,
       this.description,
       this.price,

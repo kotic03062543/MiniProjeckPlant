@@ -1,7 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, equal_keys_in_map, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, equal_keys_in_map, non_constant_identifier_names, prefer_interpolation_to_compose_strings
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myfirstapp/pages/plant_shop/cart_page.dart';
 
 import 'package:myfirstapp/until/colors.dart';
@@ -13,6 +16,7 @@ import 'package:myfirstapp/widgets/mediam_text.dart';
 // import 'package:myfirstapp/widgets/small_text.dart';
 import 'package:unicons/unicons.dart';
 
+import '../../controller/poppular_product_control.dart';
 import '../../widgets/small_text.dart';
 
 import 'package:http/http.dart' as http;
@@ -21,8 +25,13 @@ class RecomPlant extends StatefulWidget {
   // final String product_id;
   final List product;
   final int index;
+  final String user_id;
 
-  RecomPlant({Key? key, required this.product, required this.index})
+  RecomPlant(
+      {Key? key,
+      required this.product,
+      required this.index,
+      required this.user_id})
       : super(key: key);
 
   @override
@@ -30,6 +39,7 @@ class RecomPlant extends StatefulWidget {
 }
 
 class _RecomPlantState extends State<RecomPlant> {
+  TextEditingController product_id = TextEditingController();
   TextEditingController product_name = TextEditingController();
   TextEditingController product_detail = TextEditingController();
   TextEditingController product_water = TextEditingController();
@@ -37,75 +47,123 @@ class _RecomPlantState extends State<RecomPlant> {
   TextEditingController product_fer = TextEditingController();
   TextEditingController product_pic = TextEditingController();
   TextEditingController product_price = TextEditingController();
+  TextEditingController product_star = TextEditingController();
 
   bool editMode = false;
+  bool Favorited = false;
 
   // Future RecomPlant() async {
   //   if (editMode) {
   //     // var url = 'https://pattyteacher.000webhostapp.com/edit.php';
   //     var url = Uri.parse(
   //         "https://plantyshop.vitinias.com/connectPHP/select_product.php");
-      // await http.post(url, body: {
-      //   'product_name': product_name.text,
-      //   'product_detail': product_detail.text,
-      //   'product_detail': product_water.text,
-      //   'product_detail': product_light.text,
-      //   'product_detail': product_fer.text,
-      //   'product_pic': product_pic.text,
-      //   'product_price': product_price.text,
+  // await http.post(url, body: {
+  //   'product_name': product_name.text,
+  //   'product_detail': product_detail.text,
+  //   'product_detail': product_water.text,
+  //   'product_detail': product_light.text,
+  //   'product_detail': product_fer.text,
+  //   'product_pic': product_pic.text,
+  //   'product_price': product_price.text,
 
-      //   // 'password': password.text,
-      // });
-      // print(product_name.text);
+  //   // 'password': password.text,
+  // });
+  // print(product_name.text);
 
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => Home(),
-      //   ),
-      // );
-    // }
+  // Navigator.push(
+  //   context,
+  //   MaterialPageRoute(
+  //     builder: (context) => Home(),
+  //   ),
+  // );
+  // }
   // }
   @override
   void initState() {
     super.initState();
-    if (widget.index != null) {
-      // editMode = true;
-      product_name.text = widget.product[widget.index]['product_name'];
-      product_detail.text = widget.product[widget.index]['product_detail'];
-      product_water.text = widget.product[widget.index]['product_water'];
-      product_light.text = widget.product[widget.index]['product_light'];
-      product_fer.text = widget.product[widget.index]['product_fer'];
-      product_pic.text = widget.product[widget.index]['product_pic'];
-      product_price.text = widget.product[widget.index]['product_price'];
-      //  print('Name'+product_name.text);
+    product_id.text = widget.product[widget.index]['product_id'];
+    product_name.text = widget.product[widget.index]['product_name'];
+    product_detail.text = widget.product[widget.index]['product_detail'];
+    product_water.text = widget.product[widget.index]['product_water'];
+    product_light.text = widget.product[widget.index]['product_light'];
+    product_fer.text = widget.product[widget.index]['product_fer'];
+    product_pic.text = widget.product[widget.index]['product_pic'];
+    product_price.text = widget.product[widget.index]['product_price'];
+    product_star.text = widget.product[widget.index]['product_star'];
+
+    print('product' + product_id.text);
+    // addorder();
+    print('User' + widget.user_id);
+    // getmember();
+    // addorder();
+  }
+
+  //////////////////////////////////////////////
+  Future addorder() async {
+    var url1 = Uri.parse(
+        'https://plantyshop.vitinias.com/connectPHP/addproductorder.php');
+    var response1 = await http.post(url1, body: {
+      'user_id': widget.user_id,
+      'product_id': product_id.text,
+    });
+    var addorder = jsonDecode(response1.body);
+    if (addorder == 'success') {
+      print('success');
+    } else {
+      print('fail');
+    }
+  }
+
+  /////////////////////////////////////
+  ///  
+  Future addfavorite() async {
+    var url1 = Uri.parse(
+        'https://plantyshop.vitinias.com/connectPHP/addfavorite.php');
+    var response1 = await http.post(url1, body: {
+      'user_id': widget.user_id,
+      'product_id': product_id.text,
+    });
+    var addorder = jsonDecode(response1.body);
+    if (addorder == 'success') {
+      print('success');
+    } else {
+      print('fail');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Get.find<PoppularProControl>().initProduct();
     return Scaffold(
       backgroundColor: Colors.white,
       //เลื่อนขึ้นลงเท่ๆ แบบ sliver
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 80,
             title: Row(
-              // mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Spacer(),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return CartPage();
-                    }));
+                    Navigator.pop(context);
                   },
-                  child: (AppIcon(icon: UniconsLine.shopping_cart)),
+                  child: AppIcon(icon: UniconsLine.times),
                 ),
-                // AppIcon(icon: UniconsLine.times),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartPage(user_id: widget.user_id),
+                      ),
+                    );
+                  },
+                  icon: AppIcon(icon: UniconsLine.shopping_cart),
+                  iconSize: 50,
+                ),
               ],
             ),
             bottom: PreferredSize(
@@ -277,24 +335,62 @@ class _RecomPlantState extends State<RecomPlant> {
               children: [
                 Container(
                   padding:
-                      EdgeInsets.only(top: 15, bottom: 15, right: 20, left: 20),
+                      EdgeInsets.only(left: 14, right: 15, top: 4, bottom: 5),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white),
-                  child: Icon(
-                    UniconsLine.heart_alt,
-                    color: AppColors.maincolor,
+                  child: IconButton(
+                    onPressed: () {
+                      Favorite();
+                      addfavorite();
+                      Get.snackbar('Add to Favorite',
+                        'Add ' + product_name.text + ' To Favorite Successfully',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: Colors.white,
+                        colorText: Colors.black,
+                        icon: Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                          size: 25,
+                        ));
+                    },
+                    icon: (Favorited
+                        ? Icon(
+                            Icons.favorite,
+                            size: 35,
+                            color: AppColors.maincolor,
+                          )
+                        : Icon(
+                            UniconsLine.heart_sign,
+                            size: 35,
+                            color: AppColors.maincolor,
+                          )),
                   ),
                 ),
-                Container(
-                  padding:
-                      EdgeInsets.only(top: 15, bottom: 15, right: 20, left: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColors.maincolor),
-                  child: BigText(
-                    text: '฿${product_price.text} | Add',
-                    color: Colors.white,
+                GestureDetector(
+                  onTap: () {
+                    addorder();
+                    Get.snackbar('Add Item to cart',
+                        'Add ' + product_name.text + ' To cart Successfully',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: Colors.white,
+                        colorText: Colors.black,
+                        icon: Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                          size: 25,
+                        ));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 10, bottom: 15, right: 20, left: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.maincolor),
+                    child: BigText(
+                      text: '฿${product_price.text} | Add',
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -303,5 +399,15 @@ class _RecomPlantState extends State<RecomPlant> {
         ],
       ),
     );
+  }
+
+  void Favorite() {
+    setState(() {
+      if (Favorited) {
+        Favorited = false;
+      } else {
+        Favorited = true;
+      }
+    });
   }
 }

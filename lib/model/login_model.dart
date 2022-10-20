@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class ModelUserMember {
   String? username;
   String? password;
@@ -19,7 +21,6 @@ class ModelProducts {
   int? product_amount;
   int? product_pic;
   int? product_type;
- 
 
   ModelProducts({
     this.product_name,
@@ -28,9 +29,5 @@ class ModelProducts {
     this.product_amount,
     this.product_pic,
     this.product_type,
-
   });
 }
-
- 
-

@@ -15,10 +15,11 @@ import '../../model/login_model.dart';
 
 class MainPlantPage extends StatefulWidget {
   static const routeName = '/';
+  final String user_id;
   // final String id01;
 
   MainPlantPage({
-    Key? key,
+    Key? key, required this.user_id,
   }) : super(key: key);
 
   @override
@@ -64,7 +65,7 @@ class _MainPlantPageState extends State<MainPlantPage> {
                   Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(top:10),
+                        padding: EdgeInsets.only(top: 10),
                         child: Image.asset(
                           'images/logo2.png',
                           scale: 2.2,
@@ -93,7 +94,7 @@ class _MainPlantPageState extends State<MainPlantPage> {
           //body slide
           Expanded(
             child: SingleChildScrollView(
-              child: PlantPageBody(),
+              child: PlantPageBody(user_id: widget.user_id),
             ),
           )
         ],
