@@ -1,20 +1,280 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_interpolation_to_compose_strings
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../../profile/edituser_profile.dart';
 
 class ProFile extends StatefulWidget {
   final String user_id;
-  ProFile({Key? key, required  this.user_id}) : super(key: key);
+  ProFile({Key? key, required this.user_id}) : super(key: key);
 
   @override
   State<ProFile> createState() => _ProFileState();
 }
 
 class _ProFileState extends State<ProFile> {
+  Future getmember() async {
+    var url =
+        Uri.parse('https://plantyshop.vitinias.com/connectPHP/select.php');
+    var response1 = await http.post(url, body: {
+      'user_id': widget.user_id,
+    });
+    var data = jsonDecode(response1.body);
+    print(data);
+    return data;
+    // String user_id = data[0]['user_id'].toString();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('ProFile'),
+    return Scaffold(
+      body: SafeArea(
+        child: FutureBuilder(
+          future: getmember(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasError) print(snapshot.error);
+            return snapshot.hasData
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      List list = snapshot.data;
+                      return Stack(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 30, left: 25, right: 25),
+                            child: Container(
+                              width: double.infinity,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                color: Colors.red[100],
+                                borderRadius: BorderRadius.circular(25),
+                                image: DecorationImage(
+                                  image: AssetImage('images/'+list[index]['user_img']),
+                                  fit: BoxFit.cover,
+                                  // borderRadius: BorderRadius.circular(25),
+                                  // color: Colors.red[100],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 50, top: 70),
+                            child: Text(
+                              "Account name",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.lime[900]),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 102, top: 80),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditUserProfile(
+                                              user_id: widget.user_id,
+                                            )));
+                              },
+                              child: Text(
+                                'Edit Profile',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.underline),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 35, top: 170),
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.edit_outlined,
+                              ),
+                              iconSize: 25,
+                              color: Colors.black,
+                              alignment: Alignment.bottomLeft,
+                              onPressed: () {
+                                // Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) => EditProfile(user: list,
+                                //                   index: index,)));
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 25, top: 270, right: 25),
+                            child: GestureDetector(
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 2, color: Colors.grey.shade800),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(13)),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 275),
+                                    child: Icon(
+                                      FontAwesomeIcons.solidCreditCard,
+                                      color: Colors.grey.shade800,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {}),
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                : Center(child: CircularProgressIndicator());
+          },
+        ),
+      ),
     );
   }
 }
+
+// 323232
+//                             LoadingAnimationWidget.waveDots(
+//                               color: ColorCustom.orangecolor(),
+//                               size: 50,
+//                             ),
+//                             SizedBox(
+//                               height: 20,
+//                             ),
+//                             Center(
+//                               child: Text(
+//                                 'กำลังโหลดข้อมูล...',
+//                                 style: TextCustom.normal_mdg20(),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       );
+//                     } else {
+//                       return snapshot.data.length != 0
+//                           ? Expanded(
+//                               child: RefreshIndicator(
+//                                   onRefresh: refresh,
+//                                   child: ListView.builder(
+//                                     itemCount: snapshot.data.length,
+//                                     itemBuilder:
+//                                         (BuildContext context, int index) {
+//                                       List list = snapshot.data;
+//                                       return Container(
+//                                         margin:
+//                                             EdgeInsets.symmetric(vertical: 10),
+//                                         child: ElevatedButton(
+//                                           onPressed: () {
+//                                             Navigator.push(
+//                                               context,
+//                                               MaterialPageRoute(
+//                                                   builder: (context) =>
+//                                                       EditPeriod(
+//                                                         list: list,
+//                                                         index: index,
+//                                                       )),
+//                                             );
+//                                           },
+//                                           child: Row(
+//                                             children: [
+//                                               Expanded(
+//                                                 flex: 3,
+//                                                 child: Column(
+//                                                   children: [
+//                                                     ListTile(
+//                                                       title: Text(
+//                                                         snapshot.data[index]
+//                                                             ['greenhouse_name'],
+//                                                         style: TextCustom
+//                                                             .bold_b16(),
+//                                                       ),
+//                                                       subtitle: Column(
+//                                                         crossAxisAlignment:
+//                                                             CrossAxisAlignment
+//                                                                 .start,
+//                                                         children: [
+//                                                           Text(
+//                                                             'วันที่ปลูก  ' +
+//                                                                 snapshot.data[
+//                                                                         index][
+//                                                                     'create_date'],
+//                                                             style: TextCustom
+//                                                                 .normal_dg14(),
+//                                                           ),
+//                                                           Text(
+//                                                             'วันที่คาดว่าจะเก็บเกี่ยว ' +
+//                                                                 snapshot.data[
+//                                                                         index][
+//                                                                     'harvest_date'],
+//                                                             style: TextCustom
+//                                                                 .normal_dg14(),
+//                                                           ),
+//                                                         ],
+//                                                       ),
+//                                                     ),
+//                                                   ],
+//                                                 ),
+//                                               ),
+//                                               Expanded(
+//                                                 child: IconButton(
+//                                                   icon: Icon(
+//                                                     Icons.settings,
+//                                                     size: 30,
+//                                                     color: ColorCustom
+//                                                         .orangecolor(),
+//                                                   ),
+//                                                   onPressed: () {
+//                                                     Navigator.push(
+//                                                       context,
+//                                                       MaterialPageRoute(
+//                                                           builder: (context) =>
+//                                                               EditPeriodSetting(
+//                                                                 list: list,
+//                                                                 index: index,
+//                                                               )),
+//                                                     );
+//                                                   },
+//                                                 ),
+//                                               ),
+//                                             ],
+//                                           ),
+//                                           style: ElevatedButton.styleFrom(
+//                                             primary:
+//                                                 ColorCustom.lightyellowcolor(),
+//                                             shape: RoundedRectangleBorder(
+//                                               borderRadius:
+//                                                   BorderRadius.circular(20),
+//                                             ),
+//                                             padding: EdgeInsets.all(10),
+//                                           ),
+//                                         ),
+//                                       );
+//                                     },
+//                                   )),
+//                             )
+//                           : Column(
+//                               children: [
+//                                 Lottie.asset(
+//                                   'assets/animate/empty.json',
+//                                   width: 250,
+//                                   height: 250,
+//                                 ),
+//                                 Text(
+//                                   'ไม่มีรอบการปลูก',
+//                                   style: TextCustom.normal_mdg20(),
+//                                 ),
+//                               ],
+//                             );

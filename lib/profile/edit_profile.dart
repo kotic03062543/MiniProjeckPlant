@@ -1,4 +1,3 @@
-// <<<<<<< HEAD
 // // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, deprecated_member_use, prefer_typing_uninitialized_variables, unused_field, unused_element, unused_local_variable, avoid_print, must_be_immutable, unnecessary_new, sized_box_for_whitespace, use_build_context_synchronously, library_private_types_in_public_api, unused_import
 
 // import 'dart:io';
@@ -18,7 +17,7 @@
 
 //   EditProfile({Key? key, required this.list, required this.index})
 //       : super(key: key);
-// =======
+
 // import 'dart:async';
 // import 'dart:convert';
 
@@ -34,12 +33,11 @@
 //   final String id;
 
 //   const EditProFile({super.key, required this.id});
-// >>>>>>> 1130505f481799b9f9d6ac90739165da6236c39e
 //   @override
 //   _State createState() => _State();
 // }
 
-// <<<<<<< HEAD
+
 // class _EditProfileState extends State<EditProfile> {
 //   TextEditingController email = TextEditingController();
 //   TextEditingController telephone = TextEditingController();
@@ -81,7 +79,7 @@
 //       password.text = widget.list[widget.index]['password'];
 //       newpassword.text = widget.list[widget.index]['new password'];
 //     }
-// =======
+
 // class _State extends State<EditProFile> {
 //   @override
 //   void initState() {
@@ -98,13 +96,12 @@
 //     });
 //     var data = jsonDecode(response1.body);
 //     // print(data);
-// >>>>>>> 1130505f481799b9f9d6ac90739165da6236c39e
 //   }
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-// <<<<<<< HEAD
+
 //       appBar: AppBar(
 //         leading: IconButton(
 //           onPressed: () {
@@ -293,9 +290,9 @@
 // //     print(pickedFile);
 // //   }
 // // }
-// =======
+
 //       body: Text('EditProFile'),
 //     );
 //   }
 // }
-// >>>>>>> 1130505f481799b9f9d6ac90739165da6236c39e
+
