@@ -1,13 +1,17 @@
-// ignore_for_file: unnecessary_new, library_private_types_in_public_api, prefer_const_constructors, unused_import, avoid_print, prefer_const_constructors_in_immutables, non_constant_identifier_names, avoid_unnecessary_containers
+// ignore_for_file: unnecessary_new, library_private_types_in_public_api, prefer_const_constructors, unused_import, avoid_print, prefer_const_constructors_in_immutables, non_constant_identifier_names, avoid_unnecessary_containers, use_build_context_synchronously, sort_child_properties_last, prefer_interpolation_to_compose_strings, deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:myfirstapp/pages/home/bottom_bar/home.dart';
 import 'package:myfirstapp/profile/edit_profile.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:myfirstapp/until/colors.dart';
+
+import '../pages/home/bottom_bar/profile.dart';
 
 class EditUserProfile extends StatefulWidget {
   final int index;
@@ -39,7 +43,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
     if (editMode) {
       // var url = 'https://pattyteacher.000webhostapp.com/edit.php';
       var url =
-          Uri.parse("https://plantyshop.vitinias.com/connectPHP/insert.php");
+          Uri.parse("https://plantyshop.vitinias.com/connectPHP/edit.php");
       await http.post(url, body: {
         //'id' : widget.list[widget.index]['id'],
         'user_id': user_id.text,
@@ -50,12 +54,14 @@ class _EditUserProfileState extends State<EditUserProfile> {
         'user_address': user_address.text,
         'user_pic': user_pic.text,
       });
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => Home(),
-      //   ),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Launcher(
+            user_id: widget.user_id,
+          ),
+        ),
+      );
     }
   }
 
@@ -72,9 +78,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
       user_address.text = widget.list[widget.index]['user_address'];
       user_pic.text = widget.list[widget.index]['user_pic'];
     }
+
     // print('product' + product_id.text);
     // addorder();
-    print('User' + widget.user_id);
+    // print('User' + widget.user_id);
     // getmember();
     // addorder();
   }
@@ -101,15 +108,25 @@ class _EditUserProfileState extends State<EditUserProfile> {
                   Container(
                     padding: EdgeInsets.only(top: 20),
                     child: Column(children: [
-                      TextField(
-                        controller: user_pic,
-                        decoration: new InputDecoration(
-                          hintText: "user_pic",
-                          labelText: "user_pic",
-                          hintStyle: Theme.of(context).textTheme.bodyText2,
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
+                      CircleAvatar(
+                        radius: 40.0,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 12.0,
+                              child: Icon(
+                                Icons.camera_alt,
+                                size: 15.0,
+                                color: Color(0xFF404040),
+                              ),
+                            ),
+                          ),
+                          radius: 40.0,
+                          backgroundImage: AssetImage('images/' +
+                              widget.list[widget.index]['user_pic']),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -138,19 +155,19 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           focusedBorder: myfocusborder(),
                         ),
                       ),
-                      SizedBox(height: 20),
-                      TextField(
-                        controller: password,
-                        obscureText: true,
-                        decoration: new InputDecoration(
-                          hintText: "Password",
-                          labelText: "Password",
-                          hintStyle: Theme.of(context).textTheme.bodyText2,
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
-                        ),
-                      ),
+                      // SizedBox(height: 20),
+                      // TextField(
+                      //   controller: password,
+                      //   obscureText: true,
+                      //   decoration: new InputDecoration(
+                      //     hintText: "Password",
+                      //     labelText: "Password",
+                      //     hintStyle: Theme.of(context).textTheme.bodyText2,
+                      //     labelStyle: Theme.of(context).textTheme.bodyText2,
+                      //     enabledBorder: myinputborder(),
+                      //     focusedBorder: myfocusborder(),
+                      //   ),
+                      // ),
                       SizedBox(height: 20),
                       TextField(
                         controller: fullname,
@@ -190,17 +207,38 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           focusedBorder: myfocusborder(),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20),
                       GFButton(
                         padding: EdgeInsets.only(left: 100, right: 100),
                         onPressed: () {
-                          editUser();
+                          setState(() {
+                            editUser();
+                          });
+                          Get.snackbar(
+                              'Edit Profile', 'Edit ' ' Profile Successfully',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.white,
+                              colorText: Colors.black,
+                              icon: Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 25,
+                              ));
                         },
                         text: "UPDATE",
                         size: GFSize.LARGE,
                         color: AppColors.maincolor,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        onPressed: () {},
+                        child: Text('UPDATE'),
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                     ]),
                   ),
