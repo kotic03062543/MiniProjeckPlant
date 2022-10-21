@@ -55,9 +55,9 @@ class _PopularPlantDetailState extends State<PopularPlantDetail> {
     product_price.text = widget.product[widget.index]['product_price'];
     product_star.text = widget.product[widget.index]['product_star'];
 
-    print('product' + product_id.text);
-    // addorder();
-    print('User' + widget.user_id);
+    // print('product' + product_id.text);
+    // print('User' + widget.user_id);
+    
     // getmember();
     // addorder();
   }

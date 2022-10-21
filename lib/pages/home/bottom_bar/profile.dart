@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myfirstapp/until/colors.dart';
 
 import '../../../profile/edituser_profile.dart';
 
@@ -25,7 +26,7 @@ class _ProFileState extends State<ProFile> {
       'user_id': widget.user_id,
     });
     var data = jsonDecode(response1.body);
-    print(data);
+    // print(data);
     return data;
     // String user_id = data[0]['user_id'].toString();
   }
@@ -34,112 +35,123 @@ class _ProFileState extends State<ProFile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: FutureBuilder(
-          future: getmember(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasError) print(snapshot.error);
-            return snapshot.hasData
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      List list = snapshot.data;
-                      return Stack(
-                        children: <Widget>[
-                          Padding(
-                            padding:
-                                EdgeInsets.only(top: 30, left: 25, right: 25),
-                            child: Container(
-                              width: double.infinity,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.red[100],
-                                borderRadius: BorderRadius.circular(25),
-                                image: DecorationImage(
-                                  image: AssetImage('images/'+list[index]['user_img']),
-                                  fit: BoxFit.cover,
-                                  // borderRadius: BorderRadius.circular(25),
-                                  // color: Colors.red[100],
+        child: RefreshIndicator(
+          onRefresh: () async {
+            Duration(seconds: 2);
+            setState(() {});
+          },
+          child: FutureBuilder(
+            future: getmember(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasError) print(snapshot.error);
+              return snapshot.hasData
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        List list = snapshot.data;
+                        return Stack(
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: 30, left: 25, right: 25),
+                              child: Container(
+                                width: double.infinity,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  color: Colors.red[100],
+                                  borderRadius: BorderRadius.circular(25),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'images/' + list[index]['user_pic']),
+                                    fit: BoxFit.cover,
+                                    // borderRadius: BorderRadius.circular(25),
+                                    // color: Colors.red[100],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 50, top: 70),
-                            child: Text(
-                              "Account name",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.lime[900]),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 102, top: 80),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => EditUserProfile(
-                                              user_id: widget.user_id,
-                                            )));
-                              },
-                              child: Text(
-                                'Edit Profile',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 35, top: 170),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.edit_outlined,
-                              ),
-                              iconSize: 25,
-                              color: Colors.black,
-                              alignment: Alignment.bottomLeft,
-                              onPressed: () {
-                                // Navigator.push(context,
-                                //     MaterialPageRoute(builder: (context) => EditProfile(user: list,
-                                //                   index: index,)));
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsets.only(left: 25, top: 270, right: 25),
-                            child: GestureDetector(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 50,
+                            Container(
+                              margin: EdgeInsets.only(top: 160, left: 35),
+                              child: Container(
+                                  width: 320,
+                                  height: 60,
                                   decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 2, color: Colors.grey.shade800),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(13)),
+                                    color: AppColors.greencolorlow,
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 275),
-                                    child: Icon(
-                                      FontAwesomeIcons.solidCreditCard,
-                                      color: Colors.grey.shade800,
+                                  padding: EdgeInsets.only(
+                                      left: 10, right: 10, top: 6),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.only(top: 10),
+                                        child: Text(
+                                          list[index]['fullname'],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.maincolor),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditUserProfile(
+                                                        user_id: widget.user_id,
+                                                        list: list,
+                                                        index: index,
+                                                      )));
+                                        },
+                                        child: Text(
+                                          'Edit Profile',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.maincolor,
+                                              decoration:
+                                                  TextDecoration.underline),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(left: 25, top: 270, right: 25),
+                              child: GestureDetector(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 2, color: Colors.grey.shade800),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(13)),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: 275),
+                                      child: Icon(
+                                        FontAwesomeIcons.solidCreditCard,
+                                        color: Colors.grey.shade800,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                onTap: () {}),
-                          ),
-                        ],
-                      );
-                    },
-                  )
-                : Center(child: CircularProgressIndicator());
-          },
+                                  onTap: () {}),
+                            ),
+                          ],
+                        );
+                      },
+                    )
+                  : Center(child: CircularProgressIndicator());
+            },
+          ),
         ),
       ),
     );
