@@ -1,11 +1,13 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_interpolation_to_compose_strings
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_interpolation_to_compose_strings, avoid_print
 
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myfirstapp/controller/payment_controller.dart';
+import 'package:myfirstapp/pages/plant_shop/payment.dart';
 import 'package:myfirstapp/until/colors.dart';
 
 import '../../../profile/edituser_profile.dart';
@@ -31,9 +33,26 @@ class _ProFileState extends State<ProFile> {
     // String user_id = data[0]['user_id'].toString();
   }
 
+  Map<String, dynamic>? paymentIntent;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Padding(
+            padding: EdgeInsets.only(right: 55),
+            child: Text(
+              "Your Profile",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.lime[900]),
+            ),
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -74,76 +93,94 @@ class _ProFileState extends State<ProFile> {
                             Container(
                               margin: EdgeInsets.only(top: 160, left: 35),
                               child: Container(
-                                  width: 320,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.greencolorlow,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  padding: EdgeInsets.only(
-                                      left: 10, right: 10, top: 6),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(top: 10),
-                                        child: Text(
-                                          list[index]['fullname'],
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.maincolor),
-                                        ),
+                                width: 320,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: AppColors.greencolorlow,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                padding: EdgeInsets.only(
+                                    left: 10, right: 10, top: 6),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(top: 10),
+                                      child: Text(
+                                        list[index]['fullname'],
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.maincolor),
                                       ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditUserProfile(
-                                                        user_id: widget.user_id,
-                                                        list: list,
-                                                        index: index,
-                                                      )));
-                                        },
-                                        child: Text(
-                                          'Edit Profile',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.maincolor,
-                                              decoration:
-                                                  TextDecoration.underline),
-                                        ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditUserProfile(
+                                              user_id: widget.user_id,
+                                              list: list,
+                                              index: index,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Edit Profile',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.maincolor,
+                                            decoration:
+                                                TextDecoration.underline),
                                       ),
-                                    ],
-                                  )),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsets.only(left: 25, top: 270, right: 25),
-                              child: GestureDetector(
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 2, color: Colors.grey.shade800),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(13)),
+                              padding: EdgeInsets.only(
+                                  left: 25, top: 270, right: 25),
+                              child: Container(
+                                width: double.infinity,
+                                height: 45,
+                                child: OutlinedButton.icon(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Payments()));
+                                  },
+                                  icon: Icon(
+                                    FontAwesomeIcons.solidCreditCard,
+                                    size: 22,
+                                    color: AppColors.maincolor,
+                                  ),
+                                  label: Text(
+                                    'Payments',
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  style: OutlinedButton.styleFrom(
+                                    primary: Colors.grey[850],
+                                    backgroundColor: Colors.white,
+                                    side: BorderSide(
+                                      color: Colors.grey[850]!,
+                                      width: 2,
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(right: 275),
-                                      child: Icon(
-                                        FontAwesomeIcons.solidCreditCard,
-                                        color: Colors.grey.shade800,
-                                      ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
                                   ),
-                                  onTap: () {}),
+                                ),
+                              ),
                             ),
                           ],
                         );
