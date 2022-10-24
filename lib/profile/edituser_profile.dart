@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'package:myfirstapp/until/colors.dart';
 
 import '../pages/home/bottom_bar/profile.dart';
+import '../widgets/big_text.dart';
 
 class EditUserProfile extends StatefulWidget {
   final int index;
@@ -105,6 +106,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                       ),
                     ),
                   ),
+                  //
                   Container(
                     padding: EdgeInsets.only(top: 20),
                     child: Column(children: [
@@ -114,13 +116,16 @@ class _EditUserProfileState extends State<EditUserProfile> {
                         child: CircleAvatar(
                           child: Align(
                             alignment: Alignment.bottomRight,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 12.0,
-                              child: Icon(
-                                Icons.camera_alt,
-                                size: 15.0,
-                                color: Color(0xFF404040),
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 12.0,
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  size: 15.0,
+                                  color: Color(0xFF404040),
+                                ),
                               ),
                             ),
                           ),
@@ -129,6 +134,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                               widget.list[widget.index]['user_pic']),
                         ),
                       ),
+                      //
                       SizedBox(height: 20),
                       TextField(
                         controller: user_id,
@@ -208,35 +214,35 @@ class _EditUserProfileState extends State<EditUserProfile> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      GFButton(
-                        padding: EdgeInsets.only(left: 100, right: 100),
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           setState(() {
                             editUser();
                           });
                           Get.snackbar(
                               'Edit Profile', 'Edit ' ' Profile Successfully',
                               snackPosition: SnackPosition.TOP,
-                              backgroundColor: Colors.white,
+                              backgroundColor: AppColors.yellowcolor,
                               colorText: Colors.black,
                               icon: Icon(
                                 Icons.check_circle,
-                                color: Colors.green,
+                                color: AppColors.maincolor,
                                 size: 25,
                               ));
                         },
-                        text: "UPDATE",
-                        size: GFSize.LARGE,
-                        color: AppColors.maincolor,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red, // background
-                          onPrimary: Colors.white, // foreground
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 15, bottom: 15, right: 20, left: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: AppColors.maincolor),
+                          child: BigText(
+                            text: 'UPDATE',
+                            color: Colors.white,
+                          ),
                         ),
-                        onPressed: () {},
-                        child: Text('UPDATE'),
                       ),
+
                       SizedBox(
                         height: 20,
                       ),

@@ -14,6 +14,7 @@ import 'package:myfirstapp/splash_screen.dart';
 import 'login_register_home/getstarted.dart';
 import 'login_register_home/login_regis.dart';
 import 'pages/home/bottom_bar/user_profile.dart';
+import 'pages/home/catagories.dart';
 import 'pages/plant_shop/cart_page.dart';
 
 import 'helper/dependencies.dart' as dep;
@@ -44,13 +45,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
 
+      
       home: SplashScreen(),
-      // home: TrackOrder(),
       // home: PopularPlantDetail(),
       // home: LoginRegis(),
       // home: CartPage(),
       // home: PopularPlantDetail(),
-      // home: MainPlantPage(),
+      // home: MainPlantPage(user_id: '',),
     );
   }
 }

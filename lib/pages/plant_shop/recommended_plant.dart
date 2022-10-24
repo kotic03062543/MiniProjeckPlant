@@ -188,7 +188,7 @@ class _RecomPlantState extends State<RecomPlant> {
               ),
             ),
             pinned: true,
-            backgroundColor: AppColors.maincolorgreenme,
+            backgroundColor: AppColors.greenmediam,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(

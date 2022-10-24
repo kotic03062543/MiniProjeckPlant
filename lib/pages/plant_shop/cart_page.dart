@@ -256,7 +256,7 @@ class _CartPageState extends State<CartPage> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white),
                   child: BigText(
-                      text: 'Total' + ' ฿120', color: AppColors.lightRed),
+                      text: 'Cost' + ' ฿120', color: AppColors.lightRed),
                 ),
                 Container(
                   padding:
