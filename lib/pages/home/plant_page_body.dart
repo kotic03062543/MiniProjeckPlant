@@ -277,9 +277,9 @@ class _PlantPageBodyState extends State<PlantPageBody> {
               ),
               SizedBox(width: Dimensions.width10),
               Container(
-                margin: EdgeInsets.only(bottom: 3),
+                margin: EdgeInsets.only(bottom: 6),
                 child: SmallText(
-                  text: 'Plant paring',
+                  text: 'Plant Paring',
                   color: Colors.black45,
                 ),
               ),

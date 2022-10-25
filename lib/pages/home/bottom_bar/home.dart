@@ -33,6 +33,7 @@ class _LauncherState extends State<Launcher> {
       body: getBody(),
     );
   }
+
   //Body
   Widget getBody() {
     return IndexedStack(
@@ -67,37 +68,38 @@ class _LauncherState extends State<Launcher> {
       child: Padding(
         padding: const EdgeInsets.only(left: 30, right: 30, top: 7),
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(items.length, (index) {
-              return InkWell(
-                onTap: () {
-                  setState(() {
-                    pageIndex = index;
-                  });
-                },
-                child: Column(
-                  children: [
-                    Image.asset(
-                      items[index],
-                      width: 40,
-                      height: 40,
-                    ),
-                    pageIndex == index
-                        ? AnimatedContainer(
-                            duration: const Duration(milliseconds: 500),
-                            child: Container(
-                              height: 6,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                  color: AppColors.maincolor,
-                                  borderRadius: BorderRadius.circular(100)),
-                            ),
-                          )
-                        : Container()
-                  ],
-                ),
-              );
-            })),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(items.length, (index) {
+            return InkWell(
+              onTap: () {
+                setState(() {
+                  pageIndex = index;
+                });
+              },
+              child: Column(
+                children: [
+                  Image.asset(
+                    items[index],
+                    width: 40,
+                    height: 40,
+                  ),
+                  pageIndex == index
+                      ? AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          child: Container(
+                            height: 6,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: AppColors.maincolor,
+                                borderRadius: BorderRadius.circular(100)),
+                          ),
+                        )
+                      : Container()
+                ],
+              ),
+            );
+          }),
+        ),
       ),
     );
   }
