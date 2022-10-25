@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:myfirstapp/pages/home/search.dart';
 import 'package:myfirstapp/until/colors.dart';
 import 'package:myfirstapp/widgets/big_text.dart';
 import 'package:myfirstapp/widgets/small_text.dart';
@@ -76,16 +77,21 @@ class _MainPlantPageState extends State<MainPlantPage> {
                     ],
                   ),
                   Center(
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      child: Icon(
-                        UniconsLine.search,
-                        color: Colors.white,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: AppColors.maincolor,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => search(user_id: widget.user_id,)));
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        child: Icon(
+                          UniconsLine.search,
+                          color: Colors.white,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: AppColors.maincolor,
+                        ),
                       ),
                     ),
                   ),

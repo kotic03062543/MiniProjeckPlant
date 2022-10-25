@@ -52,32 +52,6 @@ class _RecomPlantState extends State<RecomPlant> {
   bool editMode = false;
   bool Favorited = false;
 
-  // Future RecomPlant() async {
-  //   if (editMode) {
-  //     // var url = 'https://pattyteacher.000webhostapp.com/edit.php';
-  //     var url = Uri.parse(
-  //         "https://plantyshop.vitinias.com/connectPHP/select_product.php");
-  // await http.post(url, body: {
-  //   'product_name': product_name.text,
-  //   'product_detail': product_detail.text,
-  //   'product_detail': product_water.text,
-  //   'product_detail': product_light.text,
-  //   'product_detail': product_fer.text,
-  //   'product_pic': product_pic.text,
-  //   'product_price': product_price.text,
-
-  //   // 'password': password.text,
-  // });
-  // print(product_name.text);
-
-  // Navigator.push(
-  //   context,
-  //   MaterialPageRoute(
-  //     builder: (context) => Home(),
-  //   ),
-  // );
-  // }
-  // }
   @override
   void initState() {
     super.initState();
@@ -115,10 +89,10 @@ class _RecomPlantState extends State<RecomPlant> {
   }
 
   /////////////////////////////////////
-  ///  
+
   Future addfavorite() async {
-    var url1 = Uri.parse(
-        'https://plantyshop.vitinias.com/connectPHP/addfavorite.php');
+    var url1 =
+        Uri.parse('https://plantyshop.vitinias.com/connectPHP/addfavorite.php');
     var response1 = await http.post(url1, body: {
       'user_id': widget.user_id,
       'product_id': product_id.text,
@@ -343,16 +317,19 @@ class _RecomPlantState extends State<RecomPlant> {
                     onPressed: () {
                       Favorite();
                       addfavorite();
-                      Get.snackbar('Add to Favorite',
-                        'Add ' + product_name.text + ' To Favorite Successfully',
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: Colors.white,
-                        colorText: Colors.black,
-                        icon: Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                          size: 25,
-                        ));
+                      Get.snackbar(
+                          'Add to Favorite',
+                          'Add ' +
+                              product_name.text +
+                              ' To Favorite Successfully',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: Colors.white,
+                          colorText: Colors.black,
+                          icon: Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                            size: 25,
+                          ));
                     },
                     icon: (Favorited
                         ? Icon(
