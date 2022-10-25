@@ -10,7 +10,9 @@ import 'package:myfirstapp/controller/payment_controller.dart';
 import 'package:myfirstapp/pages/plant_shop/payment.dart';
 import 'package:myfirstapp/until/colors.dart';
 
+import '../../../login_register_home/getstarted.dart';
 import '../../../profile/edituser_profile.dart';
+import '../../../widgets/big_text.dart';
 
 class ProFile extends StatefulWidget {
   final String user_id;
@@ -82,8 +84,8 @@ class _ProFileState extends State<ProFile> {
                                   borderRadius: BorderRadius.circular(25),
                                   image: DecorationImage(
                                     image: Image.network(
-                                  'https://plantyshop.vitinias.com/connectPHP/img/${list[index]['user_pic']}',
-                                ).image,
+                                      'https://plantyshop.vitinias.com/connectPHP/img/${list[index]['user_pic']}',
+                                    ).image,
                                     fit: BoxFit.cover,
                                     // borderRadius: BorderRadius.circular(25),
                                     // color: Colors.red[100],
@@ -192,139 +194,53 @@ class _ProFileState extends State<ProFile> {
           ),
         ),
       ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 100,
+            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
+            decoration: BoxDecoration(
+              color: AppColors.greycolor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 200,
+                    padding: EdgeInsets.only(
+                        top: 12, bottom: 5, right: 20, left: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.maincolor),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        BigText(
+                          text: 'LOGOUT',
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
-
-// 323232
-//                             LoadingAnimationWidget.waveDots(
-//                               color: ColorCustom.orangecolor(),
-//                               size: 50,
-//                             ),
-//                             SizedBox(
-//                               height: 20,
-//                             ),
-//                             Center(
-//                               child: Text(
-//                                 'กำลังโหลดข้อมูล...',
-//                                 style: TextCustom.normal_mdg20(),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       );
-//                     } else {
-//                       return snapshot.data.length != 0
-//                           ? Expanded(
-//                               child: RefreshIndicator(
-//                                   onRefresh: refresh,
-//                                   child: ListView.builder(
-//                                     itemCount: snapshot.data.length,
-//                                     itemBuilder:
-//                                         (BuildContext context, int index) {
-//                                       List list = snapshot.data;
-//                                       return Container(
-//                                         margin:
-//                                             EdgeInsets.symmetric(vertical: 10),
-//                                         child: ElevatedButton(
-//                                           onPressed: () {
-//                                             Navigator.push(
-//                                               context,
-//                                               MaterialPageRoute(
-//                                                   builder: (context) =>
-//                                                       EditPeriod(
-//                                                         list: list,
-//                                                         index: index,
-//                                                       )),
-//                                             );
-//                                           },
-//                                           child: Row(
-//                                             children: [
-//                                               Expanded(
-//                                                 flex: 3,
-//                                                 child: Column(
-//                                                   children: [
-//                                                     ListTile(
-//                                                       title: Text(
-//                                                         snapshot.data[index]
-//                                                             ['greenhouse_name'],
-//                                                         style: TextCustom
-//                                                             .bold_b16(),
-//                                                       ),
-//                                                       subtitle: Column(
-//                                                         crossAxisAlignment:
-//                                                             CrossAxisAlignment
-//                                                                 .start,
-//                                                         children: [
-//                                                           Text(
-//                                                             'วันที่ปลูก  ' +
-//                                                                 snapshot.data[
-//                                                                         index][
-//                                                                     'create_date'],
-//                                                             style: TextCustom
-//                                                                 .normal_dg14(),
-//                                                           ),
-//                                                           Text(
-//                                                             'วันที่คาดว่าจะเก็บเกี่ยว ' +
-//                                                                 snapshot.data[
-//                                                                         index][
-//                                                                     'harvest_date'],
-//                                                             style: TextCustom
-//                                                                 .normal_dg14(),
-//                                                           ),
-//                                                         ],
-//                                                       ),
-//                                                     ),
-//                                                   ],
-//                                                 ),
-//                                               ),
-//                                               Expanded(
-//                                                 child: IconButton(
-//                                                   icon: Icon(
-//                                                     Icons.settings,
-//                                                     size: 30,
-//                                                     color: ColorCustom
-//                                                         .orangecolor(),
-//                                                   ),
-//                                                   onPressed: () {
-//                                                     Navigator.push(
-//                                                       context,
-//                                                       MaterialPageRoute(
-//                                                           builder: (context) =>
-//                                                               EditPeriodSetting(
-//                                                                 list: list,
-//                                                                 index: index,
-//                                                               )),
-//                                                     );
-//                                                   },
-//                                                 ),
-//                                               ),
-//                                             ],
-//                                           ),
-//                                           style: ElevatedButton.styleFrom(
-//                                             primary:
-//                                                 ColorCustom.lightyellowcolor(),
-//                                             shape: RoundedRectangleBorder(
-//                                               borderRadius:
-//                                                   BorderRadius.circular(20),
-//                                             ),
-//                                             padding: EdgeInsets.all(10),
-//                                           ),
-//                                         ),
-//                                       );
-//                                     },
-//                                   )),
-//                             )
-//                           : Column(
-//                               children: [
-//                                 Lottie.asset(
-//                                   'assets/animate/empty.json',
-//                                   width: 250,
-//                                   height: 250,
-//                                 ),
-//                                 Text(
-//                                   'ไม่มีรอบการปลูก',
-//                                   style: TextCustom.normal_mdg20(),
-//                                 ),
-//                               ],
-//                             );
