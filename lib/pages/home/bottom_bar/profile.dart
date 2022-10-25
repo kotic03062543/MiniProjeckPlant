@@ -81,8 +81,9 @@ class _ProFileState extends State<ProFile> {
                                   color: Colors.red[100],
                                   borderRadius: BorderRadius.circular(25),
                                   image: DecorationImage(
-                                    image: AssetImage(
-                                        'images/' + list[index]['user_pic']),
+                                    image: Image.network(
+                                  'https://plantyshop.vitinias.com/connectPHP/img/${list[index]['user_pic']}',
+                                ).image,
                                     fit: BoxFit.cover,
                                     // borderRadius: BorderRadius.circular(25),
                                     // color: Colors.red[100],
