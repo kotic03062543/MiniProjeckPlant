@@ -36,17 +36,6 @@ class _CartPageState extends State<CartPage> {
     return json.decode(response.body);
   }
 
-  // Future showorders() async {
-  //   var url =
-  //       Uri.parse('https://plantyshop.vitinias.com/connectPHP/showorder.php');
-  //   var response1 = await http.post(url, body: {
-  //     // 'user_id': widget.user_id,
-  //     // 'user_id': widget.prouct_id,
-  //   });
-  //   var data = jsonDecode(response1.body);
-  //   print(data);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -267,7 +256,7 @@ class _CartPageState extends State<CartPage> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white),
                   child: BigText(
-                      text: 'Total' + ' ฿120', color: AppColors.lightRed),
+                      text: 'Cost' + ' ฿120', color: AppColors.lightRed),
                 ),
                 Container(
                   padding:

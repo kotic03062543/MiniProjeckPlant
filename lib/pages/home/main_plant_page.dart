@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -9,6 +9,7 @@ import 'package:myfirstapp/widgets/big_text.dart';
 import 'package:myfirstapp/widgets/small_text.dart';
 import 'package:unicons/unicons.dart';
 
+import 'catagories.dart';
 import 'plant_page_body.dart';
 
 import '../../model/login_model.dart';
@@ -19,7 +20,8 @@ class MainPlantPage extends StatefulWidget {
   // final String id01;
 
   MainPlantPage({
-    Key? key, required this.user_id,
+    Key? key,
+    required this.user_id,
   }) : super(key: key);
 
   @override
@@ -91,12 +93,14 @@ class _MainPlantPageState extends State<MainPlantPage> {
               ),
             ),
           ),
+
           //body slide
           Expanded(
             child: SingleChildScrollView(
               child: PlantPageBody(user_id: widget.user_id),
             ),
-          )
+          ),
+          //catagories
         ],
       ),
     );

@@ -19,6 +19,8 @@ import '../plant_shop/poppular_detail.dart';
 import '../plant_shop/recommended_plant.dart';
 import 'package:get/get.dart';
 
+import 'catagories.dart';
+
 class PlantPageBody extends StatefulWidget {
   final String user_id;
 
@@ -56,8 +58,6 @@ class _PlantPageBodyState extends State<PlantPageBody> {
     // getdata();
   }
 
-  // List<ModelProducts> pruductlist = [];
-
   Future getdata() async {
     // var url = "http://localhost/addressbook/select.php";
     var url = Uri.parse(
@@ -67,16 +67,6 @@ class _PlantPageBodyState extends State<PlantPageBody> {
     // print(data);
     return json.decode(response.body);
   }
-
-  // Future getdatapopular() async {
-  //   // var url = "http://localhost/addressbook/select.php";
-  //   var url = Uri.parse(
-  //       "https://plantyshop.vitinias.com/connectPHP/product_ratehight.php");
-  //   var response = await http.get(url);
-  //   var data1 = jsonDecode(response.body);
-  //   // print(data1);
-  //   return json.decode(response.body);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +225,6 @@ class _PlantPageBodyState extends State<PlantPageBody> {
           ),
         ),
 
-        //
         // ignore: unnecessary_new
         //dot
         new DotsIndicator(
@@ -249,6 +238,10 @@ class _PlantPageBodyState extends State<PlantPageBody> {
                 borderRadius: BorderRadius.circular(5.0)),
           ),
         ),
+        SizedBox(height: 20),
+        //catagories
+        catagories(user_id: widget.user_id),
+        SizedBox(height: 10),
         //Poppular menu
         SizedBox(height: Dimensions.height15),
         Container(
@@ -256,7 +249,7 @@ class _PlantPageBodyState extends State<PlantPageBody> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              BigText(text: 'Recomment'),
+              BigText(text: 'Recommended'),
               SizedBox(width: Dimensions.width10),
               Container(
                 margin: EdgeInsets.only(bottom: 3),
@@ -276,6 +269,7 @@ class _PlantPageBodyState extends State<PlantPageBody> {
             ],
           ),
         ),
+        
         //listview menu
         Container(
           margin: EdgeInsets.only(top: Dimensions.height10),
