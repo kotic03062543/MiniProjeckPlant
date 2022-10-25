@@ -5,6 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myfirstapp/pages/home/bottom_bar/home.dart';
 import 'package:myfirstapp/pages/home/bottom_bar/profile.dart';
+import 'package:unicons/unicons.dart';
+
+import '../../until/colors.dart';
+import '../../widgets/app_icon.dart';
 
 class Payments extends StatefulWidget {
   Payments({Key? key}) : super(key: key);
@@ -20,14 +24,13 @@ class _PaymentsState extends State<Payments> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => Launcher(user_id: widget.user_id,)));
+            Navigator.pop(context);
           },
-          icon: Icon(
-            FontAwesomeIcons.circleChevronLeft,
-            color: Colors.grey[850],
+          icon: AppIcon(
+            icon: UniconsLine.angle_left_b,
+            iconColor: Colors.white,
+            backgroundColor: AppColors.maincolor,
+            size: 45,
           ),
         ),
         title: Center(
@@ -155,7 +158,7 @@ class _PaymentsState extends State<Payments> {
                   SizedBox(
                     height: 20,
                   ),
-                   Container(
+                  Container(
                     // margin: EdgeInsets.only(left: 30, top: 30, right: 30),
                     width: 350,
                     height: 70,
@@ -212,10 +215,10 @@ class _PaymentsState extends State<Payments> {
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 20,
                   ),
-                   Container(
+                  Container(
                     // margin: EdgeInsets.only(left: 30, top: 30, right: 30),
                     width: 350,
                     height: 70,
@@ -272,10 +275,10 @@ class _PaymentsState extends State<Payments> {
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 20,
                   ),
-                   Container(
+                  Container(
                     // margin: EdgeInsets.only(left: 30, top: 30, right: 30),
                     width: 350,
                     height: 70,

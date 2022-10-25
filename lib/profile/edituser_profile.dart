@@ -15,7 +15,9 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:myfirstapp/until/colors.dart';
+import 'package:unicons/unicons.dart';
 import '../pages/home/bottom_bar/profile.dart';
+import '../widgets/app_icon.dart';
 import '../widgets/big_text.dart';
 
 class EditUserProfile extends StatefulWidget {
@@ -97,14 +99,13 @@ class _EditUserProfileState extends State<EditUserProfile> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Launcher(user_id: widget.user_id)));
+            Navigator.pop(context);
           },
-          icon: Icon(
-            FontAwesomeIcons.circleChevronLeft,
-            color: Colors.grey[850],
+          icon: AppIcon(
+            icon: UniconsLine.angle_left_b,
+            iconColor: Colors.white,
+            backgroundColor: AppColors.maincolor,
+            size: 45,
           ),
         ),
         title: Center(
@@ -129,114 +130,114 @@ class _EditUserProfileState extends State<EditUserProfile> {
               padding: EdgeInsets.only(left: 20, right: 20, top: 20),
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: user_pic,
-                          decoration: new InputDecoration(
-                            hintText: "User_pic",
-                            labelText: "User_pic",
-                            hintStyle: Theme.of(context).textTheme.bodyText2,
-                            labelStyle: Theme.of(context).textTheme.bodyText2,
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          controller: user_id,
-                          decoration: new InputDecoration(
-                            hintText: "User_id",
-                            labelText: "User_id",
-                            hintStyle: Theme.of(context).textTheme.bodyText2,
-                            labelStyle: Theme.of(context).textTheme.bodyText2,
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        // ignore: dead_code
-                        TextField(
-                          controller: username,
-                          // enabled: false,
-                          decoration: new InputDecoration(
-                            hintText: "Username",
-                            labelText: "Username",
-                            hintStyle: Theme.of(context).textTheme.bodyText2,
-                            labelStyle: Theme.of(context).textTheme.bodyText2,
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          controller: password,
-                          obscureText: true,
-                          decoration: new InputDecoration(
-                            hintText: "Password",
-                            labelText: "Password",
-                            hintStyle: Theme.of(context).textTheme.bodyText2,
-                            labelStyle: Theme.of(context).textTheme.bodyText2,
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          controller: fullname,
-                          // obscureText: true,
-                          decoration: new InputDecoration(
-                            hintText: "Fullname",
-                            labelText: "Fullname",
-                            hintStyle: Theme.of(context).textTheme.bodyText2,
-                            labelStyle: Theme.of(context).textTheme.bodyText2,
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          controller: user_email,
-                          // obscureText: true,
-                          decoration: new InputDecoration(
-                            hintText: "Email",
-                            labelText: "Email",
-                            hintStyle: Theme.of(context).textTheme.bodyText2,
-                            labelStyle: Theme.of(context).textTheme.bodyText2,
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          controller: user_address,
-                          // obscureText: true,
-                          decoration: new InputDecoration(
-                            hintText: "Address",
-                            labelText: "Address",
-                            hintStyle: Theme.of(context).textTheme.bodyText2,
-                            labelStyle: Theme.of(context).textTheme.bodyText2,
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        GFButton(
-                          padding: EdgeInsets.only(left: 100, right: 100),
-                          onPressed: () {
-                            editUser();
-                          },
-                          text: "UPDATE",
-                          size: GFSize.LARGE,
-                          color: AppColors.maincolor,
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.only(top: 20),
+                  //   child: Column(
+                  //     children: [
+                  //       TextField(
+                  //         controller: user_pic,
+                  //         decoration: new InputDecoration(
+                  //           hintText: "User_pic",
+                  //           labelText: "User_pic",
+                  //           hintStyle: Theme.of(context).textTheme.bodyText2,
+                  //           labelStyle: Theme.of(context).textTheme.bodyText2,
+                  //           enabledBorder: myinputborder(),
+                  //           focusedBorder: myfocusborder(),
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 20),
+                  //       TextField(
+                  //         controller: user_id,
+                  //         decoration: new InputDecoration(
+                  //           hintText: "User_id",
+                  //           labelText: "User_id",
+                  //           hintStyle: Theme.of(context).textTheme.bodyText2,
+                  //           labelStyle: Theme.of(context).textTheme.bodyText2,
+                  //           enabledBorder: myinputborder(),
+                  //           focusedBorder: myfocusborder(),
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 20),
+                  //       // ignore: dead_code
+                  //       TextField(
+                  //         controller: username,
+                  //         // enabled: false,
+                  //         decoration: new InputDecoration(
+                  //           hintText: "Username",
+                  //           labelText: "Username",
+                  //           hintStyle: Theme.of(context).textTheme.bodyText2,
+                  //           labelStyle: Theme.of(context).textTheme.bodyText2,
+                  //           enabledBorder: myinputborder(),
+                  //           focusedBorder: myfocusborder(),
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 20),
+                  //       TextField(
+                  //         controller: password,
+                  //         obscureText: true,
+                  //         decoration: new InputDecoration(
+                  //           hintText: "Password",
+                  //           labelText: "Password",
+                  //           hintStyle: Theme.of(context).textTheme.bodyText2,
+                  //           labelStyle: Theme.of(context).textTheme.bodyText2,
+                  //           enabledBorder: myinputborder(),
+                  //           focusedBorder: myfocusborder(),
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 20),
+                  //       TextField(
+                  //         controller: fullname,
+                  //         // obscureText: true,
+                  //         decoration: new InputDecoration(
+                  //           hintText: "Fullname",
+                  //           labelText: "Fullname",
+                  //           hintStyle: Theme.of(context).textTheme.bodyText2,
+                  //           labelStyle: Theme.of(context).textTheme.bodyText2,
+                  //           enabledBorder: myinputborder(),
+                  //           focusedBorder: myfocusborder(),
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 20),
+                  //       TextField(
+                  //         controller: user_email,
+                  //         // obscureText: true,
+                  //         decoration: new InputDecoration(
+                  //           hintText: "Email",
+                  //           labelText: "Email",
+                  //           hintStyle: Theme.of(context).textTheme.bodyText2,
+                  //           labelStyle: Theme.of(context).textTheme.bodyText2,
+                  //           enabledBorder: myinputborder(),
+                  //           focusedBorder: myfocusborder(),
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 20),
+                  //       TextField(
+                  //         controller: user_address,
+                  //         // obscureText: true,
+                  //         decoration: new InputDecoration(
+                  //           hintText: "Address",
+                  //           labelText: "Address",
+                  //           hintStyle: Theme.of(context).textTheme.bodyText2,
+                  //           labelStyle: Theme.of(context).textTheme.bodyText2,
+                  //           enabledBorder: myinputborder(),
+                  //           focusedBorder: myfocusborder(),
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         height: 20,
+                  //       ),
+                  //       GFButton(
+                  //         padding: EdgeInsets.only(left: 100, right: 100),
+                  //         onPressed: () {
+                  //           editUser();
+                  //         },
+                  //         text: "UPDATE",
+                  //         size: GFSize.LARGE,
+                  //         color: AppColors.maincolor,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   //
                   Container(
                     padding: EdgeInsets.only(top: 20),

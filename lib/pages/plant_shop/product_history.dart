@@ -1,22 +1,37 @@
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:myfirstapp/widgets/mediam_text.dart';
 import 'package:unicons/unicons.dart';
+// import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import '../../until/colors.dart';
 import '../../until/dimension.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
-import '../../widgets/small_text.dart';
 
 class ProductHis extends StatefulWidget {
-  final String order_id;
-  ProductHis({Key? key, required this.order_id}) : super(key: key);
+  final String user_id;
+  ProductHis({Key? key, required this.user_id}) : super(key: key);
 
   @override
   State<ProductHis> createState() => _ProductHisState();
 }
 
 class _ProductHisState extends State<ProductHis> {
-  get http => null;
+  Future showorders() async {
+    var url = Uri.parse(
+        'https://plantyshop.vitinias.com/connectPHP/showorder_history.php');
+    var response = await http.post(url, body: {
+      'user_id': widget.user_id,
+    });
+    var data = jsonDecode(response.body);
+    // print(data);
+    return json.decode(response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +94,7 @@ class _ProductHisState extends State<ProductHis> {
                     );
                   },
                   child: FutureBuilder(
-                    // future: showorders(),
+                    future: showorders(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasError) print(snapshot.error);
                       return snapshot.hasData
@@ -90,36 +105,28 @@ class _ProductHisState extends State<ProductHis> {
                                 List list = snapshot.data;
                                 return SizedBox(
                                   width: double.maxFinite,
-                                  height: Dimensions.height20 * 10,
+                                  height: Dimensions.height20 * 4.5,
                                   child: Row(
                                     children: [
-                                      // Container(
-                                      //   width: Dimensions.width20 * 7,
-                                      //   height: Dimensions.height20 * 12,
-                                      //   margin:
-                                      //       const EdgeInsets.only(bottom: 10),
-                                      //   decoration: BoxDecoration(
-                                      //     image: DecorationImage(
-                                      //       fit: BoxFit.cover,
-                                      //       image: AssetImage('images/' +
-                                      //           list[index]['product_pic']),
-                                      //     ),
-                                      //     color: Colors.white,
-                                      //     borderRadius:
-                                      //         BorderRadius.circular(20),
-                                      //   ),
-                                      // ),
                                       SizedBox(width: Dimensions.width20),
                                       Expanded(
                                         child: Container(
-                                          height: Dimensions.height20 * 10,
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              bottom: BorderSide(
+                                                color: Colors.grey,
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                          height: Dimensions.height20 * 4,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                                MainAxisAlignment.start,
                                             children: [
-                                              BigText(
+                                              MediamText(
                                                   text: list[index]
                                                       ['product_name'],
                                                   color: Colors.black54),
@@ -129,7 +136,7 @@ class _ProductHisState extends State<ProductHis> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  BigText(
+                                                  MediamText(
                                                       text: '฿ ' +
                                                           list[index]
                                                               ['product_price'],
@@ -139,15 +146,16 @@ class _ProductHisState extends State<ProductHis> {
                                                     onTap: () {
                                                       setState(() {
                                                         var url = Uri.parse(
-                                                            "https://plantyshop.vitinias.com/connectPHP/deletecart.php");
+                                                            "https://plantyshop.vitinias.com/connectPHP/delete_history.php");
                                                         http.post(url, body: {
-                                                          'order_id':
+                                                          'detail_id':
                                                               list[index]
-                                                                  ['order_id'],
+                                                                  ['detail_id'],
                                                         });
                                                       });
                                                       debugPrint(
                                                           'delete Clicked');
+                                                      RefreshIndicator;
                                                     },
                                                     child: Icon(
                                                         UniconsLine.trash_alt,

@@ -36,17 +36,6 @@ class _FavoreitPageState extends State<FavoreitPage> {
     return json.decode(response.body);
   }
 
-  // Future showorders() async {
-  //   var url =
-  //       Uri.parse('https://plantyshop.vitinias.com/connectPHP/showorder.php');
-  //   var response1 = await http.post(url, body: {
-  //     // 'user_id': widget.user_id,
-  //     // 'user_id': widget.prouct_id,
-  //   });
-  //   var data = jsonDecode(response1.body);
-  //   print(data);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,8 +145,6 @@ class _FavoreitPageState extends State<FavoreitPage> {
                                                               ['product_price'],
                                                       color:
                                                           AppColors.lightRed),
-                                                 
-                                                  
                                                   GestureDetector(
                                                     onTap: () {
                                                       setState(() {
@@ -173,14 +160,15 @@ class _FavoreitPageState extends State<FavoreitPage> {
 
                                                       debugPrint(
                                                           'delete Clicked');
-                                                       Get.snackbar(
+                                                      RefreshIndicator;
+                                                      Get.snackbar(
                                                           'Delete Favorite',
                                                           'Delete '
                                                               ' To Favorite Successfully',
                                                           snackPosition:
                                                               SnackPosition.TOP,
                                                           backgroundColor:
-                                                              Colors.white,
+                                                              Colors.yellow,
                                                           colorText:
                                                               Colors.black,
                                                           icon: Icon(
