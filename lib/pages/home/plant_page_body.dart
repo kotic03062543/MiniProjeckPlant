@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_new
+// ignore_for_file: prefer_const_constructors, unnecessary_new, duplicate_ignore
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -67,6 +67,9 @@ class _PlantPageBodyState extends State<PlantPageBody> {
     // print(data);
     return json.decode(response.body);
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +245,20 @@ class _PlantPageBodyState extends State<PlantPageBody> {
         //catagories
         catagories(user_id: widget.user_id),
         SizedBox(height: 10),
+        //search bar
+        // Container(
+        //   margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+        //   child: TextFormField(
+        //     controller: textController,
+        //     decoration: InputDecoration(
+        //       hintText: 'Search',
+        //       prefixIcon: Icon(Icons.search),
+        //       border: OutlineInputBorder(
+        //         borderRadius: BorderRadius.circular(20),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         //Poppular menu
         SizedBox(height: Dimensions.height15),
         Container(
@@ -269,8 +286,8 @@ class _PlantPageBodyState extends State<PlantPageBody> {
             ],
           ),
         ),
-        
-        //listview menu
+
+        //listview recommended
         Container(
           margin: EdgeInsets.only(top: Dimensions.height10),
           child: FutureBuilder(
@@ -323,7 +340,7 @@ class _PlantPageBodyState extends State<PlantPageBody> {
                                     },
                                     child: Container(
                                       padding: EdgeInsets.only(
-                                          left: Dimensions.width10/1.5),
+                                          left: Dimensions.width10 / 1.5),
                                       height: 110,
                                       // width: 200,
                                       decoration: BoxDecoration(
@@ -346,12 +363,16 @@ class _PlantPageBodyState extends State<PlantPageBody> {
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
-                                                  left: Dimensions.width10*1.4),
+                                                  left:
+                                                      Dimensions.width10 * 1.4),
                                               child: BigText(
-                                                text: list[index]['product_name'],
+                                                text: list[index]
+                                                    ['product_name'],
                                               ),
                                             ),
-                                            SizedBox(height: Dimensions.height10/2),
+                                            SizedBox(
+                                                height:
+                                                    Dimensions.height10 / 2),
                                             Container(
                                               margin: EdgeInsets.only(
                                                   left:

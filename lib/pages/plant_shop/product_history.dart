@@ -1,39 +1,22 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_interpolation_to_compose_strings
-
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
-import '../../../until/colors.dart';
-import '../../../until/dimension.dart';
-import '../../../widgets/app_icon.dart';
-import '../../../widgets/big_text.dart';
-import '../../../widgets/small_text.dart';
-import '../../plant_shop/product_history.dart';
+import '../../until/colors.dart';
+import '../../until/dimension.dart';
+import '../../widgets/app_icon.dart';
+import '../../widgets/big_text.dart';
+import '../../widgets/small_text.dart';
 
-class ShopCart extends StatefulWidget {
-  final String user_id;
-  const ShopCart({Key? key, required this.user_id}) : super(key: key);
+class ProductHis extends StatefulWidget {
+  final String order_id;
+  ProductHis({Key? key, required this.order_id}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _HomeState();
-  }
+  State<ProductHis> createState() => _ProductHisState();
 }
 
-class _HomeState extends State<ShopCart> {
-  Future showorders() async {
-    var url =
-        Uri.parse('https://plantyshop.vitinias.com/connectPHP/showorder.php');
-    var response = await http.post(url, body: {
-      'user_id': widget.user_id,
-    });
-    var data = jsonDecode(response.body);
-    // print(data);
-    return json.decode(response.body);
-  }
+class _ProductHisState extends State<ProductHis> {
+  get http => null;
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +43,10 @@ class _HomeState extends State<ShopCart> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) {
-                      return ProductHis(
-                        order_id: '',
-                      );
-                    }));
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (builder) {
+                    //   return ProductHis();
+                    // }));
                   },
                   child: AppIcon(
                     icon: UniconsLine.history,
@@ -98,7 +79,7 @@ class _HomeState extends State<ShopCart> {
                     );
                   },
                   child: FutureBuilder(
-                    future: showorders(),
+                    // future: showorders(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasError) print(snapshot.error);
                       return snapshot.hasData
@@ -112,21 +93,22 @@ class _HomeState extends State<ShopCart> {
                                   height: Dimensions.height20 * 10,
                                   child: Row(
                                     children: [
-                                      Container(
-                                        width: Dimensions.width20 * 7,
-                                        height: Dimensions.height20 * 12,
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: AssetImage('images/' +
-                                                list[index]['product_pic']),
-                                          ),
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                      ),
+                                      // Container(
+                                      //   width: Dimensions.width20 * 7,
+                                      //   height: Dimensions.height20 * 12,
+                                      //   margin:
+                                      //       const EdgeInsets.only(bottom: 10),
+                                      //   decoration: BoxDecoration(
+                                      //     image: DecorationImage(
+                                      //       fit: BoxFit.cover,
+                                      //       image: AssetImage('images/' +
+                                      //           list[index]['product_pic']),
+                                      //     ),
+                                      //     color: Colors.white,
+                                      //     borderRadius:
+                                      //         BorderRadius.circular(20),
+                                      //   ),
+                                      // ),
                                       SizedBox(width: Dimensions.width20),
                                       Expanded(
                                         child: Container(
@@ -141,7 +123,7 @@ class _HomeState extends State<ShopCart> {
                                                   text: list[index]
                                                       ['product_name'],
                                                   color: Colors.black54),
-                                              SmallText(text: 'Type plant'),
+                                              // SmallText(text: 'Type plant'),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -153,32 +135,6 @@ class _HomeState extends State<ShopCart> {
                                                               ['product_price'],
                                                       color:
                                                           AppColors.lightRed),
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 15,
-                                                        bottom: 15,
-                                                        right: 20,
-                                                        left: 20),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color: Colors.white),
-                                                    child: Row(
-                                                      // ignore: prefer_const_literals_to_create_immutables
-                                                      children: [
-                                                        Icon(UniconsLine.minus,
-                                                            color:
-                                                                Colors.black54),
-                                                        SizedBox(width: 5),
-                                                        BigText(text: '1'),
-                                                        SizedBox(width: 5),
-                                                        Icon(UniconsLine.plus,
-                                                            color:
-                                                                Colors.black54),
-                                                      ],
-                                                    ),
-                                                  ),
                                                   GestureDetector(
                                                     onTap: () {
                                                       setState(() {
@@ -217,54 +173,6 @@ class _HomeState extends State<ShopCart> {
           ),
         ],
       ),
-      // bottomNavigationBar: Column(
-      //   mainAxisSize: MainAxisSize.min,
-      //   children: [
-      //     Container(
-      //       height: 120,
-      //       padding: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
-      //       decoration: BoxDecoration(
-      //         color: AppColors.greycolor,
-      //         borderRadius: BorderRadius.only(
-      //             topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-      //       ),
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           Container(
-      //             padding:
-      //                 EdgeInsets.only(top: 10, bottom: 15, right: 20, left: 20),
-      //             decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.circular(20),
-      //                 color: Colors.white),
-      //             child: BigText(
-      //                 text: 'Total' + ' ฿120', color: AppColors.lightRed),
-      //           ),
-      //           GestureDetector(
-      //             onTap: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (builder) {
-      //                 return ProductHis();
-      //               }));
-      //             },
-      //             child: Container(
-      //               padding: EdgeInsets.only(
-      //                   top: 15, bottom: 15, right: 20, left: 20),
-      //               decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(20),
-      //                   color: AppColors.maincolor),
-      //               child: BigText(
-      //                 text: 'Checkout',
-      //                 // text: '฿${product_price.text} | Add',
-      //                 color: Colors.white,
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
