@@ -229,7 +229,7 @@ class _loginState extends State<LoginRegis> {
                 TextButton(
                   onPressed: () {},
                   child: Text(
-                    'Forget Password?',
+                    'Forget Password ?',
                     style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
