@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,7 +28,7 @@ class BigText extends StatelessWidget {
         fontSize: size,
         letterSpacing: 1.1,
         fontWeight: FontWeight.w400,
-        // fontFamily: 'Roboto',
+        
       ),
     );
   }
