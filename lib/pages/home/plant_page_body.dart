@@ -5,16 +5,13 @@ import 'package:http/http.dart' as http;
 
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:myfirstapp/controller/poppular_product_control.dart';
 import 'package:myfirstapp/until/colors.dart';
 import 'package:myfirstapp/until/dimension.dart';
-import 'package:myfirstapp/widgets/app_column.dart';
 import 'package:myfirstapp/widgets/big_text.dart';
 import 'package:myfirstapp/widgets/icon_and_text_widget.dart';
 import 'package:myfirstapp/widgets/small_text.dart';
 import 'package:unicons/unicons.dart';
 
-import '../../model/login_model.dart';
 import '../plant_shop/poppular_detail.dart';
 import '../plant_shop/recommended_plant.dart';
 import 'package:get/get.dart';
@@ -57,6 +54,15 @@ class _PlantPageBodyState extends State<PlantPageBody> {
     });
     // getdata();
   }
+  //  Future getdata2() async {
+  //   // var url = "http://localhost/addressbook/select.php";
+  //   var url1 = Uri.parse(
+  //       "https://plantyshop.vitinias.com/connectPHP/product_ratehight.php");
+  //   var response1 = await http.get(url1);
+  //   var data1 = jsonDecode(response1.body);
+  //   // print(data);
+  //   // return json.decode(response1.body);
+  // }
 
   Future getdata() async {
     // var url = "http://localhost/addressbook/select.php";
@@ -68,8 +74,7 @@ class _PlantPageBodyState extends State<PlantPageBody> {
     return json.decode(response.body);
   }
 
-
-
+ 
 
   @override
   Widget build(BuildContext context) {

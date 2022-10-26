@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_interpolation_to_compose_strings
 
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -63,7 +64,9 @@ class _HomeState extends State<ShopCart> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (builder) {
                       return ProductHis(
-                        order_id: '',
+                        user_id: widget.user_id, 
+                        // order_id: '',
+                      
                       );
                     }));
                   },
@@ -141,7 +144,43 @@ class _HomeState extends State<ShopCart> {
                                                   text: list[index]
                                                       ['product_name'],
                                                   color: Colors.black54),
-                                              SmallText(text: 'Type plant'),
+                                              Row(
+                                                children: [
+                                                  SmallText(text: 'Outdoor'),
+                                                  Spacer(),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() async {
+                                                        var url1 = Uri.parse(
+                                                            'https://plantyshop.vitinias.com/connectPHP/checkout_product.php');
+                                                        var response1 =
+                                                            await http.post(
+                                                                url1,
+                                                                body: {
+
+                                                              'user_id': widget
+                                                                  .user_id,
+                                                            });
+                                                        var addorder =
+                                                            jsonDecode(
+                                                                response1.body);
+                                                        if (addorder ==
+                                                            'success') {
+                                                          print('success');
+                                                        } else {
+                                                          print('fail');
+                                                        }
+                                                      });
+                                                    },
+                                                    child: Icon(
+                                                      UniconsLine.check_circle,
+                                                      color:
+                                                          AppColors.iconColor3,
+                                                      size: 25,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -192,6 +231,21 @@ class _HomeState extends State<ShopCart> {
                                                       });
                                                       debugPrint(
                                                           'delete Clicked');
+                                                      Get.snackbar(
+                                                          'Delete Order',
+                                                          'Delete '
+                                                              ' To Order Successfully',
+                                                          snackPosition:
+                                                              SnackPosition.TOP,
+                                                          backgroundColor:
+                                                              Colors.yellow,
+                                                          colorText:
+                                                              Colors.black,
+                                                          icon: Icon(
+                                                            Icons.check_circle,
+                                                            color: Colors.green,
+                                                            size: 25,
+                                                          ));
                                                     },
                                                     child: Icon(
                                                         UniconsLine.trash_alt,
@@ -217,54 +271,51 @@ class _HomeState extends State<ShopCart> {
           ),
         ],
       ),
-      // bottomNavigationBar: Column(
-      //   mainAxisSize: MainAxisSize.min,
-      //   children: [
-      //     Container(
-      //       height: 120,
-      //       padding: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
-      //       decoration: BoxDecoration(
-      //         color: AppColors.greycolor,
-      //         borderRadius: BorderRadius.only(
-      //             topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-      //       ),
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           Container(
-      //             padding:
-      //                 EdgeInsets.only(top: 10, bottom: 15, right: 20, left: 20),
-      //             decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.circular(20),
-      //                 color: Colors.white),
-      //             child: BigText(
-      //                 text: 'Total' + ' ฿120', color: AppColors.lightRed),
-      //           ),
-      //           GestureDetector(
-      //             onTap: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (builder) {
-      //                 return ProductHis();
-      //               }));
-      //             },
-      //             child: Container(
-      //               padding: EdgeInsets.only(
-      //                   top: 15, bottom: 15, right: 20, left: 20),
-      //               decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(20),
-      //                   color: AppColors.maincolor),
-      //               child: BigText(
-      //                 text: 'Checkout',
-      //                 // text: '฿${product_price.text} | Add',
-      //                 color: Colors.white,
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ],
-      // ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 120,
+            padding: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
+            decoration: BoxDecoration(
+              color: AppColors.greycolor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.only(top: 10, bottom: 15, right: 20, left: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
+                  child:
+                      BigText(text: 'Cost' + ' ฿60', color: AppColors.lightRed),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 15, bottom: 15, right: 20, left: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.maincolor),
+                    child: BigText(
+                      text: 'Checkout',
+                      // text: '฿${product_price.text} | Add',
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

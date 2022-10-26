@@ -48,8 +48,8 @@ dependencies:
   lottie: ^1.4.2
   form_field_validator: ^1.1.0
   expandable_text: ^2.3.0
-  image_picker: ^0.8.4+4
   getwidget: ^3.0.1
+  image_picker: ^0.8.6
 
 # For information on the generic Dart part of this file, see the
 
